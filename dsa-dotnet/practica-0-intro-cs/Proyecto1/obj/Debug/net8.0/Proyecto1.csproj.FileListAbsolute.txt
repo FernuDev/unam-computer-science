@@ -1,0 +1,15 @@
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Proyecto1/obj/Debug/net8.0/Proyecto1.GeneratedMSBuildEditorConfig.editorconfig
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Proyecto1/obj/Debug/net8.0/Proyecto1.AssemblyInfoInputs.cache
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Proyecto1/obj/Debug/net8.0/Proyecto1.AssemblyInfo.cs
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Proyecto1/obj/Debug/net8.0/Proyecto1.csproj.CoreCompileInputs.cache
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Proyecto1/obj/Debug/net8.0/Proyecto1.sourcelink.json
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Proyecto1/bin/Debug/net8.0/Proyecto1
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Proyecto1/bin/Debug/net8.0/Proyecto1.deps.json
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Proyecto1/bin/Debug/net8.0/Proyecto1.runtimeconfig.json
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Proyecto1/bin/Debug/net8.0/Proyecto1.dll
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Proyecto1/bin/Debug/net8.0/Proyecto1.pdb
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Proyecto1/obj/Debug/net8.0/Proyecto1.dll
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Proyecto1/obj/Debug/net8.0/refint/Proyecto1.dll
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Proyecto1/obj/Debug/net8.0/Proyecto1.pdb
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Proyecto1/obj/Debug/net8.0/Proyecto1.genruntimeconfig.cache
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Proyecto1/obj/Debug/net8.0/ref/Proyecto1.dll

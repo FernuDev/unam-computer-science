@@ -1,0 +1,39 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Laberinto.MainWindow"
+        Title="Laberinto" Width="700" Height="500"
+        Icon="/Assets/icon.png">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_Ayuda">
+                <MenuItem Header="_Muestra mosaicos..." Click="MuestraMosaicos"/>
+                <MenuItem Header="_Acerca de..."/>
+            </MenuItem>
+        </Menu>
+        <StackPanel HorizontalAlignment="Center"
+          Orientation="Horizontal" DockPanel.Dock="Bottom">
+            <TextBlock Margin="5"
+                HorizontalAlignment="Center"
+                Text="Columnas:">
+            </TextBlock>
+            <TextBox Name="columnas" Text="20"/>
+            <TextBlock Margin="5"
+                HorizontalAlignment="Center"
+                Text="Renglones:">
+            </TextBlock>
+            <TextBox Name="renglones" Text="10"/>
+            <Button HorizontalAlignment="Right" Click="ManejaClickEnGenera">Genera</Button>
+            <Button HorizontalAlignment="Right" Click="ManejaClickEnResuelve">Resuelve</Button>
+            <Button HorizontalAlignment="Right" Click="ManejaClickEnReinicia">Reinicia</Button>
+        </StackPanel>
+        <Border Margin="5" 
+            CornerRadius="10"
+            Background="LightBlue">
+            <Canvas Name="canvasPrincipal" Background="Blue" Width="640" Height="400">
+            </Canvas>
+        </Border>
+    </DockPanel>
+</Window>

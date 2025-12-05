@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "2oxFRER6Nu6/NI6nY+M37T9XXx4ci8/fWw2w7ye7T0H1amVAguJvA+AgROT5Aqj748g5ODhKTqg7bZpRXOnLUA==",
+  "success": true,
+  "projectFilePath": "/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Proyecto1/Proyecto1.csproj",
+  "expectedPackageFiles": [
+    "/home/fernudev/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.7/microsoft.aspnetcore.app.ref.8.0.7.nupkg.sha512"
+  ],
+  "logs": []
+}

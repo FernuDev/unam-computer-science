@@ -1,0 +1,16 @@
+1. ¿Qué técnica utilizas para detectar cuando la cola está vacía?
+    Verifico el contador. Si forma no ha sido llamado niguna vez, mediante el constructor tendremos
+    el numero de contador = 0, si hemos vaciado manualmente la cola igualmente se lleva la variable
+    privada contador a 0
+
+2. ¿Qué fórmula utilizas para detectar cuando el buffer de la cola está lleno?
+    Verifico si el buffer.Length es igual al contador, de esta manera puedo esta seguro que la cantidad de datos
+    que hemos ingresado en la cola ha alcanzado el numero maximo permitido y lanza la excepcion, ya que no se nos
+    permite usar memoria dinamica, podriamos copiar todo en un nuevo arreglo mas grande.
+
+3. ¿Cuál es la complejidad para el mejor y peor caso de los métodos Mira, Forma y
+Atiende? Justifica.
+
+    Los tres metodos son constantes, Mira y Atiende se fijan en el primer elemento y Forma funciona
+    mediante count y final, ya que implementamos la cola con un arreglo podemos usar la indexacion, lo 
+    cual nos facilita las operaciones de busqueda a diferencia de una lista enlazada

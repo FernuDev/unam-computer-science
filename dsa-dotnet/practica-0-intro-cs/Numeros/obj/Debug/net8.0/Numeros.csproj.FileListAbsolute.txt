@@ -1,0 +1,15 @@
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Numeros/obj/Debug/net8.0/Numeros.GeneratedMSBuildEditorConfig.editorconfig
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Numeros/obj/Debug/net8.0/Numeros.AssemblyInfoInputs.cache
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Numeros/obj/Debug/net8.0/Numeros.AssemblyInfo.cs
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Numeros/obj/Debug/net8.0/Numeros.csproj.CoreCompileInputs.cache
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Numeros/obj/Debug/net8.0/Numeros.sourcelink.json
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Numeros/bin/Debug/net8.0/Numeros
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Numeros/bin/Debug/net8.0/Numeros.deps.json
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Numeros/bin/Debug/net8.0/Numeros.runtimeconfig.json
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Numeros/bin/Debug/net8.0/Numeros.dll
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Numeros/bin/Debug/net8.0/Numeros.pdb
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Numeros/obj/Debug/net8.0/Numeros.dll
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Numeros/obj/Debug/net8.0/refint/Numeros.dll
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Numeros/obj/Debug/net8.0/Numeros.pdb
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Numeros/obj/Debug/net8.0/Numeros.genruntimeconfig.cache
+/home/fernudev/Projects/Data_Structures/pr-ctica-0-introducci-n-a-c-Fernu292/Numeros/obj/Debug/net8.0/ref/Numeros.dll

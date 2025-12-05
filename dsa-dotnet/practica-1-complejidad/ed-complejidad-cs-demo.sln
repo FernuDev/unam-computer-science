@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Complejidad", "Complejidad\Complejidad.csproj", "{A52B8AF9-1E08-4479-956C-582A2A9B403D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComplejidadNPruebas", "ComplejidadNPruebas\ComplejidadNPruebas.csproj", "{A6004EB4-D492-4DBA-A3BC-2EBE5EC56293}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComplejidadMain", "ComplejidadMain\ComplejidadMain.csproj", "{C62978F3-B9B7-48C3-9CA1-C958E63B7578}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A52B8AF9-1E08-4479-956C-582A2A9B403D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A52B8AF9-1E08-4479-956C-582A2A9B403D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A52B8AF9-1E08-4479-956C-582A2A9B403D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A52B8AF9-1E08-4479-956C-582A2A9B403D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6004EB4-D492-4DBA-A3BC-2EBE5EC56293}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6004EB4-D492-4DBA-A3BC-2EBE5EC56293}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6004EB4-D492-4DBA-A3BC-2EBE5EC56293}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6004EB4-D492-4DBA-A3BC-2EBE5EC56293}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C62978F3-B9B7-48C3-9CA1-C958E63B7578}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C62978F3-B9B7-48C3-9CA1-C958E63B7578}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C62978F3-B9B7-48C3-9CA1-C958E63B7578}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C62978F3-B9B7-48C3-9CA1-C958E63B7578}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
