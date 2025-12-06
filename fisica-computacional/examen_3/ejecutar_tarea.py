@@ -403,3 +403,4 @@ print(f"  Valor máximo: {U_gauss.max():.6f}")
 print(f"  Valor mínimo: {U_gauss.min():.6f}")
 print(f"  Valor medio:  {U_gauss.mean():.6f}")
 
+

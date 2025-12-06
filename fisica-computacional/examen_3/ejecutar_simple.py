@@ -167,3 +167,4 @@ print(f"  Valor mínimo: {U.min():.6f}")
 print(f"  Valor medio:  {U.mean():.6f}")
 print(f"  Iteraciones:  {len(residuos)}")
 
+
