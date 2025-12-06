@@ -39,9 +39,17 @@ public interface IComplejidad
     /// <param name="par2">Segundo valor que se usó al llamar al último método ejecutado.</param>
     /// <param name="ops">Número de operaciones realizadas.</param>
 	public static void EscribeOperaciones(String archivo, int par1, int par2, long ops)
-    {
+    {   
 		// TODO: Escribe tu código aquí y borra la excepción.
-        throw new NotImplementedException();
+        FileStream flujo = new FileStream(archivo, FileMode.Append);
+        using (StreamWriter escritor = new StreamWriter(flujo, Encoding.UTF8)) 
+        {
+            if (par2 != 0){
+                escritor.WriteLine($"{par1} {par2} {ops}");
+            }else {
+                escritor.WriteLine($"{par1} {ops}");
+            }
+        }
 	}
 
     /// <summary>

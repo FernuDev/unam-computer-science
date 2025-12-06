@@ -6,6 +6,7 @@ using System;
 using Avalonia.Media.Imaging;
 using Avalonia;
 using Avalonia.Media;
+using System.Collections.Generic;
 
 namespace Laberinto;
 
@@ -72,8 +73,36 @@ public partial class MainWindow : Window
 		/// Caso base: está parado sobre la meta.
 		/// Caso recursivo: está en algún otro mosaico.
 		///
-        
-		return false;
+
+        if (_agente.EstáEnMeta()){
+            return true;
+        }
+
+        _agente.MarcaCelda();
+
+        LinkedList<Dirección> direcciones = _agente.DireccionesPasillos();
+
+        // Buscamos en todas las direcciones posibles 
+        foreach(Dirección dir in direcciones) {
+            
+            // Verificamos si no hemos visitado la celta siguiente
+            if(_agente.MiraSiNoVisitada(dir)) {
+                // Intentamos avanzar en esa dirección, si es una pared retorna false
+                if(_agente.Avanza(dir)) {
+
+                    // Implementando recursividad
+                    if(ResuelveLaberinto()) {
+                        return true;
+                    }
+
+                    // En cado de no resolverse con ese llamado
+                    _agente.DesmarcaCelda();
+                    _agente.Avanza(dir.Opuesta()); 
+                }
+            }
+
+        }
+        return false;
     }
 
     private void ManejaClickEnReinicia(object sender, RoutedEventArgs e)

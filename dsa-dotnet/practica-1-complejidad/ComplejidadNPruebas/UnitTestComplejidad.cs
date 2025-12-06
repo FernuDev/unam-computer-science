@@ -37,7 +37,7 @@ public class Tests : Calificador
     [Test]
 	public void PruebaFibonacciRec() {
         IniciaPrueba("Fibonnacci Recursivo", "FibonacciRec", 2.0);
-        Assert.That(c.FibonacciRec(6), Is.EqualTo(8));
+        Assert.That(c?.FibonacciRec(6), Is.EqualTo(8));
 		SumaPuntos(1.0);
         Assert.That(c.FibonacciRec(8), Is.EqualTo(21));
 		SumaPuntos(1.0);
@@ -46,7 +46,7 @@ public class Tests : Calificador
     [Test]
 	public void PruebaFibonacciIt() {
         IniciaPrueba("Fibonnacci Iterativo", "FibonacciIt", 2.0);
-        Assert.That(c.FibonacciIt(8), Is.EqualTo(21));
+        Assert.That(c?.FibonacciIt(8), Is.EqualTo(21));
 		SumaPuntos(1.0);
         Assert.That(c.FibonacciIt(12), Is.EqualTo(144));
 		SumaPuntos(1.0);
@@ -56,7 +56,7 @@ public class Tests : Calificador
     public void PruebaPascalRecursivo()
     {
         IniciaPrueba("Pascal Recursivo", "TPascalRec", 2.0);
-        Assert.That(c.TPascalRec(5, 2), Is.EqualTo(10));
+        Assert.That(c?.TPascalRec(5, 2), Is.EqualTo(10));
         SumaPuntos(1.0);
         Assert.That(c.TPascalRec(3, 2), Is.EqualTo(3));
         SumaPuntos(1.0);
@@ -66,7 +66,7 @@ public class Tests : Calificador
     public void PruebaPascalIterativo()
     {
         IniciaPrueba("Pascal Iterativo", "TPascalIt", 2.0);
-        Assert.That(c.TPascalIt(5, 2), Is.EqualTo(10));
+        Assert.That(c?.TPascalIt(5, 2), Is.EqualTo(10));
         SumaPuntos(1.0);
         Assert.That(c.TPascalIt(3, 2), Is.EqualTo(3));
         SumaPuntos(1.0);
@@ -75,23 +75,23 @@ public class Tests : Calificador
     [Test]
 	public void PruebaFibItInválido()
     {
-        IniciaPrueba("Pascal Iterativo",
+        IniciaPrueba("Fibonnacci Iterativo",
                      "Cálculo Fibonacci valor inválido iterativo", 0.2);
         ArgumentOutOfRangeException e =
             Assert.Throws<ArgumentOutOfRangeException>(
-                () => c.FibonacciIt(-5)
+                () => c?.FibonacciIt(-5)
             );
         SumaPuntos(0.2);
 	}
 
     [Test]
-	public void PruebaRecItInválido()
+	public void PruebaFibRecInválido()
     {
-        IniciaPrueba("Pascal Recursivo",
+        IniciaPrueba("Fibonnacci Recursivo",
                      "Cálculo Fibonacci valor inválido recursivo", 0.2);
         ArgumentOutOfRangeException e =
             Assert.Throws<ArgumentOutOfRangeException>(
-                () => c.FibonacciRec(-10)
+                () => c?.FibonacciRec(-10)
             );
         SumaPuntos(0.2);
 	}
@@ -103,7 +103,7 @@ public class Tests : Calificador
                      "Cálculo Pascal valor inválido iterativo 1", 0.1);
         ArgumentOutOfRangeException e =
             Assert.Throws<ArgumentOutOfRangeException>(
-                () => c.TPascalIt(-5, 1)
+                () => c?.TPascalIt(-5, 1)
             );
         SumaPuntos(0.1);
 	}
@@ -115,7 +115,7 @@ public class Tests : Calificador
                      "Cálculo Pascal valor inválido iterativo 2", 0.1);
         ArgumentOutOfRangeException e =
             Assert.Throws<ArgumentOutOfRangeException>(
-                () => c.TPascalIt(5, -1)
+                () => c?.TPascalIt(5, -1)
             );
         SumaPuntos(0.1);
 	}
@@ -127,7 +127,7 @@ public class Tests : Calificador
                      "Cálculo Pascal valor inválido iterativo 3", 0.2);
         ArgumentOutOfRangeException e =
             Assert.Throws<ArgumentOutOfRangeException>(
-                () => c.TPascalIt(3, 5)
+                () => c?.TPascalIt(3, 5)
             );
         SumaPuntos(0.2);
 	}
@@ -139,7 +139,7 @@ public class Tests : Calificador
                      "Cálculo Pascal valor inválido iterativo 1", 0.1);
         ArgumentOutOfRangeException e =
             Assert.Throws<ArgumentOutOfRangeException>(
-                () => c.TPascalRec(-5, 1)
+                () => c?.TPascalRec(-5, 1)
             );
         SumaPuntos(0.1);
 	}
@@ -151,7 +151,7 @@ public class Tests : Calificador
                      "Cálculo Pascal valor inválido iterativo 2", 0.1);
         ArgumentOutOfRangeException e =
             Assert.Throws<ArgumentOutOfRangeException>(
-                () => c.TPascalRec(5, -1)
+                () => c?.TPascalRec(5, -1)
             );
         SumaPuntos(0.1);
 	}
@@ -163,8 +163,58 @@ public class Tests : Calificador
                      "Cálculo Pascal valor inválido iterativo 3", 0.2);
         ArgumentOutOfRangeException e =
             Assert.Throws<ArgumentOutOfRangeException>(
-                () => c.TPascalRec(3, 5)
+                () => c?.TPascalRec(3, 5)
             );
         SumaPuntos(0.2);
 	}
+
+    /// <summary>
+    /// Pruebas unitarias extras de la practica parte-1
+    /// </summary>
+    /// <summary>
+    /// Pruebas unitarias de la serie de fibonacii
+    /// </summary>
+    [Test]
+    public void PruebaFibonacciRec2() 
+    {
+        IniciaPrueba("Fibonnacci Recursivo", "FibonacciRec2", 2.0);
+        Assert.That(c?.FibonacciRec(20), Is.EqualTo(6765));
+		SumaPuntos(1.0);
+        Assert.That(c.FibonacciRec(15), Is.EqualTo(610));
+		SumaPuntos(1.0);
+    }
+
+    [Test]
+    public void PruebaFibonacciIt2() 
+    {
+        IniciaPrueba("Fibonnacci Iterativo", "FibonacciIt2", 2.0);
+        Assert.That(c?.FibonacciIt(11), Is.EqualTo(89));
+        SumaPuntos(1.0);
+        Assert.That(c.FibonacciIt(19), Is.EqualTo(4181));
+        SumaPuntos(1.0);
+    }
+    /// <summary>
+    /// Pruebas unitarias del tiangulo de pascal
+    /// </summary>
+
+    [Test]
+    public void PruebaPascalRecursivo2()
+    {
+        IniciaPrueba("Pascal Recursivo", "TPascalRec", 2.0);
+        Assert.That(c?.TPascalRec(7, 4), Is.EqualTo(35));
+        SumaPuntos(1.0);
+        Assert.That(c.TPascalRec(9, 2), Is.EqualTo(36));
+        SumaPuntos(1.0);
+    }
+
+    [Test]
+    public void PruebaPascalIterativo2() 
+    {
+        IniciaPrueba("Pascal Iterativo", "TPascalIt", 2.0);
+        Assert.That(c?.TPascalIt(7,3), Is.EqualTo(35));
+        SumaPuntos(1.0);
+        Assert.That(c.TPascalIt(9,1), Is.EqualTo(9));
+        SumaPuntos(1.0);
+    }
+ 
 }

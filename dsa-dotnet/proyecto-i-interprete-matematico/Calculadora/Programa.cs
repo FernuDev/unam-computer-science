@@ -8,14 +8,21 @@ public class Calculadora
 {
     private Opciones notaciónActual = Opciones.Prefija;
     public void ImprimeMenú()
-    {
-        Console.WriteLine($"Tipo de notación por defecto: {notaciónActual}");
-        Console.WriteLine("Para cambiar de notación escribe:");
+    {   
+        Console.Clear();
+        Console.WriteLine("========================= Interprete matematico =========================\n");
+        Console.WriteLine("\tPrograma que permite evaluar expresiones matematicas");
+        Console.WriteLine("\tDigita la operacion que desees realizar en la notacion");
+        Console.WriteLine("\tseleccionada, en caso de necesitar cambiarla puedes hacerlo");
+        Console.WriteLine("\tdigitanto :{Opcion}, una vez que termines digita Salir\n");
+        Console.WriteLine($"\tTipo de notación por defecto: {notaciónActual}");
+        Console.WriteLine("\tPara cambiar de notación escribe:");
         foreach(var o in Opciones.GetValues<Opciones>())
         {
-            Console.WriteLine($":{o.ToString()}");
+            Console.WriteLine($"\t\t:{o.ToString()}");
         }
-        Console.WriteLine("Salir    para terminar la ejecución del programa.");
+        Console.WriteLine("\tSalir    para terminar la ejecución del programa.\n");
+        Console.WriteLine("=========================================================================");
         Console.WriteLine();
     }
 
@@ -49,6 +56,8 @@ public class Calculadora
         c.ImprimeMenú();
         string? instrucción;
         string[] símbolos;
+
+        Console.Write("\tDigite su operacion: ");
         while((instrucción = Console.ReadLine()) != null && instrucción != "Salir")
         {
             símbolos = c.SeparaSímbolos(instrucción);
@@ -57,12 +66,18 @@ public class Calculadora
                 Opciones opción = Enum.Parse<Opciones>(símbolos[0].Substring(1));
                 if (opción == c.notaciónActual)
                 {
-                    Console.WriteLine($"La calculadora ya está en notación {opción}");
+                    c.ImprimeMenú();
+                    Console.WriteLine($"\tLa calculadora ya está en notación {opción}");
+                    Console.Write("\tDigite su operacion: ");
+
                 }
                 else
                 {
                     c.notaciónActual = opción;
-                    Console.WriteLine($"La calculadora ha cambiado a notación {opción}");
+                    c.ImprimeMenú();
+                    Console.WriteLine($"\tLa calculadora ha cambiado a notación {opción}");
+                    Console.Write("\tDigite su operacion: ");
+
                 }
                 continue;
             }
@@ -81,11 +96,12 @@ public class Calculadora
                     resultado = Notaciones.EvalúaInfija(símbolos);
                     break;
                 default:
-                    Console.WriteLine("Notación inválida");
+                    Console.WriteLine("\tNotación inválida");
                     c.ImprimeMenú();
                     continue;
             }
-            Console.WriteLine("= " + resultado);
+            Console.WriteLine($"\t{instrucción} = {resultado}");
+            Console.Write("\tDigite su operacion: ");
         }
     }
 }

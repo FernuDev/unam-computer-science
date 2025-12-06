@@ -1,0 +1,195 @@
+<!DOCTYPE html><html><head>
+      <title>ReportePractica</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+      
+      
+      
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+      <!-- The content below will be included at the end of the <head> element. --><script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script></head><body for="html-export">
+    
+    
+      <div class="crossnote markdown-preview  ">
+      
+<div align="center">
+<br>  
+<h1 id="reporte-de-practica">Reporte de practica </h1>
+<p>Luis Fernando Nuñez Rangel<br>
+Reporte de practica sobre el analisis de la complejidad de los algoritmos mediante la notación Big O<br>
+<br></p>
+</div>
+<h2 id="fibonacci">Fibonacci </h2>
+<h4 id="fibonacci-recursivo">Fibonacci recursivo </h4>
+<p>Comenzaremos analizando el metodo fibonacci recursivo, el cual acorde a lo visto el la fig 1. Tiene una complejidad exponencial O(n²), pues el número de operaciones aumenta de forma exagera conforme se incrementa el numero de la entrada. Realizandose operaciones innecesarias dentro del propio algoritmo.</p>
+<div align="center">
+<br>
+<img src="./Img/FibRec.png" alt="Fibonacci recursivo grafico">
+<br>
+<p><em><strong>Figura 1</strong></em></p>
+</div>
+<h4 id="fibonacci-iterativo">Fibonacci iterativo </h4>
+<p>Ahora analizemos el metodo iterativo, que a simple vista en codigo podria paracer mas complejo que el recursivo, sin embargo podemos apreciar que esto no es asi.</p>
+<p>Pues mantiene una complejidad lineal O(n), pues el número de operaciones aumenta de forma proporcional con la entrada de los datos, es mejorable aun, sin embargo es un buen acercamiento a algo más eficiente.</p>
+<p>Vease fig 2.</p>
+<div align="center">
+<br>
+    <img src="./Img/FibIt.png" alt="Fibonacci iterativo grafico">
+<br>
+<p><em><strong>Figura 2</strong></em></p>
+</div>
+<h2 id="triángulo-de-pascal">Triángulo de Pascal </h2>
+<p>El triángulo de pascal permite calcular de forma rapida y eficiente los coeficientes de un binomio elevado a la <em><strong>n</strong></em> ; (a+b)² = a² + 2ab + b², por poner un ejemplo.</p>
+<h3 id="triángulo-de-pascal-recursivo">Triángulo de Pascal Recursivo </h3>
+<p>Para el metodo recursivo observamos algo muy similar a lo antes visto con Fibonacci, un crecimiento exponencial O(n²) pues vemos que conforme la fila aumenta el numero de operaciones lo hace de igual manera, sin embargo cabe recalcar que esto lo hace con mayor tendencia a los numeros centrales del triángulo, pues logicamente, estos requiren por naturaleza más operaciones que los extremos. Vease Fig 3.</p>
+<div align="center">
+<br>
+    <img src="./Img/PascRec.png" alt="Triangulo de pascal recursivo grafico">
+<br>
+<p><em><strong>Figura 3</strong></em></p>
+</div>
+<h3 id="triángulo-de-pascal-iterativo">Triángulo de Pascal Iterativo </h3>
+<p>Este metodo resulta mas simple en complejidad; al igual que el metodo FibIt(n) mantiene una complejidad lineal O(n) mejorable aun para reducir su tiempo de ejecución, sin embargo igualmente presenta una increible mejora con respecto al metodo recursivo.<br>
+Vease Fig 4.</p>
+<div align="center">
+<br>
+    <img src="./Img/PascIt.png" alt="Triángulo de pascal iterativo grafico">
+<br>
+<p><em><strong>Figura 4</strong></em></p>
+</div>
+<div align="center">
+<h2 id="preguntas">Preguntas </h2>
+</div>
+<h3 id="para-las-versiones-recursivas">Para las versiones recursivas </h3>
+<p>¿Cual es el valor maximo de n que pudiste calcular para Fibonacci sin que se alentara la computadora?</p>
+<ul>
+<li>80, La computadora se mantenia usable y sin desperfectos sin embargo a partir del 35 tardaba cada vez mas en calcular el siguiente elemento</li>
+</ul>
+<p>¿Cuanto se tardó?</p>
+<ul>
+<li>Entre 10 y 15 minutos (Dependiendo si la tenia conectada a la corriente o no)</li>
+</ul>
+<p>¿Cual es el valor maximo de ren que pudiste calcular para el triángulo de pascal sin que se alentara la computadora?</p>
+<ul>
+<li>70, La computadora se mantenia usable pero mas de 70 comenzaba a dar trabas en la pc.</li>
+</ul>
+<p>¿Cuanto se tardó?</p>
+<ul>
+<li>Aproximadamente 20 minutos</li>
+</ul>
+<h3 id="justificacion-a-partir-del-codigo">Justificacion a partir del codigo </h3>
+<p>Una vez que ya analizamos los resultados en las graficas y que podemos ver claramente la complejidad de cada algoritmo, veamos ahora el por que de esta misma en la estructura del codigo.</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>    /// &lt;summary&gt;
+    /// Función auxiliar que permite calcular de forma recursiva el 
+    /// n-esimo termino de la sucesión
+    /// &lt;/summary&gt;
+    /// &lt;param name="n"&gt; El indice del elemento que se desea calcular
+    /// &lt;returns&gt;El n-esimo elemento de la sucesión de Fibonacci&lt;/returns&gt;
+    private int FibonacciRecAux(int n){
+        contador++;
+        if (n&lt;2) return n;
+        return FibonacciRecAux(n-1) + FibonacciRecAux(n-2);
+    }
+</code></pre><p>Como podemos apreciar en la estructura del codigo por cada llamada explicita a la función terminamos haciendo el doble demanera que al llegar finalmente a la condicion n&lt;2 hemos llamado un enorme numero de veces la función, ademas el codigo es en parte ineficiente, pues hace algunos calculos mas de una sola vez.</p>
+<p>En cambio analicemos el metodo iterativo que a simple vista podría parecer peor en nivel de complejidad al depender de un bucle sin embargo eh aqui del por que de su complejidad lineal.</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>    /// &lt;summary&gt;
+    /// Función que permite calcular el n-esimo termino de forma iterativa
+    /// &lt;/summary&gt;
+    /// &lt;param name="n"&gt; El indice del elemento que se desea calcular
+    /// &lt;returns&gt;El n-esimo elemento de la sucesión de Fibonacci&lt;/returns&gt;
+    /// &lt;exception cref="IndexOutOfBoundsException"&gt; Si el valor de &lt;code&gt;n&lt;/code&gt; es
+    /// invalido.&lt;/exception&gt;
+    public int FibonacciIt(int n) {
+
+        ArgumentOutOfRangeException.ThrowIfNegative(n);
+
+        int current = 0;
+        int low = 0;
+        int fast = 1;
+
+        contador = 0;
+
+        for(int i=1;i&lt;n;i++){
+            current = low + fast;
+            low = fast;
+            fast = current;
+
+            contador++;
+        }
+
+        return current;
+    }
+</code></pre><p>Analizando el codigo vemos que el bucle for se ejecuta un total de n-1 veces, aunque si bien, la complejidad temporal crece conforme crece n, lo hace de una forma controlada y lineal, no exponencial.</p>
+<p>Lo mismo sucede cuando analizamos el codigo del triangulo de pascal, tanto iterativo como el recursivo.</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>        /// &lt;summary&gt;
+    /// Método para calcular, de forma recursiva, el elemento en la fila 
+    /// &lt;code&gt;i&lt;/code&gt; y columna &lt;code&gt;j&lt;/code&gt;
+    /// del triángulo de Pascal de forma recursiva
+    /// &lt;/summary&gt;
+    ///
+    /// &lt;param name="ren"&gt;El número de fila.&lt;/param&gt;
+    /// &lt;param name="col"&gt;El número de columna.&lt;/param&gt;
+    /// &lt;returns&gt;El elemento en la i-ésima fila y la j-ésima columna del 
+    /// triángulo de Pascal.&lt;/returns&gt;
+    private int TPascalRecAux(int ren, int col){
+        contador++;
+        // Casos fundamentales o triviales
+        if (col == 0 || ren == col || ren == 0) return 1;
+        return TPascalRecAux(ren-1,col-1) + TPascalRecAux(ren-1,col);
+    }
+</code></pre><p>De una manera similar al caso de Fibonacci, vemos que a menos que unas condiciones especificas se cumplan, la funcion se llama a si misma 2 veces mas, por lo que su crecimiento será exponencial entre mas aumente ren.</p>
+<p>Caso contrario al algoritmo iterativo, el cual depende de un solo bucle, por lo que su crecimiento será lineal, crece de manera proporcional con n</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>    /// &lt;summary&gt;
+    /// Método para calcular, iterativamente, el elemento en la fila
+    /// &lt;code&gt;i&lt;/code&gt;, en la columna &lt;code&gt;j&lt;/code&gt; del triángulo de Pascal.
+    /// &lt;/summary&gt;
+    ///
+    /// &lt;param name="ren"&gt;El número de fila.&lt;/param&gt;
+    /// &lt;param name="col"&gt;El número de columna.&lt;/param&gt;
+    /// &lt;returns&gt; El elemento en la i-ésima fila y la j-ésima columna del
+    /// triángulo de Pascal.&lt;/returns&gt;
+    /// &lt;exception cref="IndexOutOfBoundsException"&gt;Si los indices &lt;code&gt;i&lt;/code&gt;
+    /// &lt;code&gt;j&lt;/code&gt; son inválidos. &lt;/exception&gt;
+    public int TPascalIt(int ren, int col){
+        if (ren &lt; 0 || col &lt; 0 || (col &gt; ren &amp;&amp; ren &lt; 5)) throw new ArgumentOutOfRangeException();
+
+        contador = 0;
+
+        if (col == 0 || ren == col){
+            contador++;
+            return 1;
+        } 
+
+        int number = 1;
+        for (int i = 1; i &lt;= col; i++) {
+            number = number * (ren - i + 1) / i;
+            contador++;
+        }
+
+        return number;
+    }
+``
+</code></pre>
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+  
+    </body></html>

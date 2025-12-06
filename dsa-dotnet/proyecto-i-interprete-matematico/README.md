@@ -1,490 +1,249 @@
-# Proyecto I: Intérprete Matemático
+[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=15918548&assignment_repo_type=AssignmentRepo)
 
-![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=csharp&logoColor=white)
-![Project](https://img.shields.io/badge/Tipo-Proyecto-red?style=for-the-badge)
-![Status](https://img.shields.io/badge/Estado-Completo-success?style=for-the-badge)
+# Intérprete Matemático
+
+> Evaluador de expresiones matemáticas con soporte para notaciones prefija, infija y postfija
+
+## Tabla de Contenidos
+
+- [Descripción](#descripción)
+- [Características](#características)
+- [Requisitos Previos](#requisitos-previos)
+- [Instalación](#instalación)
+- [Uso](#uso)
+  - [Ejecutar el Intérprete](#ejecutar-el-intérprete)
+  - [Ejecutar Pruebas](#ejecutar-pruebas)
+- [Notaciones Soportadas](#notaciones-soportadas)
+- [Operadores Soportados](#operadores-soportados)
+- [Estructura del Proyecto](#estructura-del-proyecto)
+- [Ejemplos de Uso](#ejemplos-de-uso)
+- [Implementación](#implementación)
+- [Construcción del Proyecto](#construcción-del-proyecto)
 
 ## Descripción
 
-Proyecto integrador que implementa un **intérprete matemático** capaz de evaluar expresiones aritméticas en tres notaciones diferentes:
-- **Notación Infija** (la que usamos normalmente)
-- **Notación Prefija** (notación polaca)
-- **Notación Postfija** (notación polaca inversa)
+Este proyecto es un intérprete de expresiones matemáticas desarrollado en C# que permite evaluar operaciones aritméticas en tres diferentes notaciones: **prefija**, **infija** y **postfija**. La implementación utiliza estructuras de datos fundamentales como pilas (Stack) y colas (Queue) para el procesamiento eficiente de las expresiones.
 
-Este proyecto aplica el concepto de **pilas** para evaluar expresiones de manera eficiente.
+El proyecto fue desarrollado como parte del curso de Estructuras de Datos en la UNAM, aplicando conceptos teóricos de estructuras de datos lineales en un contexto práctico.
 
-## Objetivos del Proyecto
+## Características
 
-- Implementar conversores entre notaciones
-- Evaluar expresiones usando pilas
-- Aplicar algoritmo Shunting Yard de Dijkstra
-- Manejar precedencia de operadores
-- Validar expresiones matemáticas
-- Construir una calculadora completa
+- **Múltiples notaciones**: Soporte para notaciones prefija (polaca), infija (estándar) y postfija (polaca inversa)
+- **Cambio dinámico**: Posibilidad de cambiar entre notaciones durante la ejecución
+- **Operaciones aritméticas**: Suma, resta, multiplicación, división y módulo
+- **Manejo de paréntesis**: Soporte completo para expresiones con paréntesis en notación infija
+- **Validación de expresiones**: Detección de errores en expresiones malformadas
+- **Interfaz de consola interactiva**: Interfaz de usuario intuitiva basada en texto
+- **Suite de pruebas**: Conjunto completo de pruebas unitarias con NUnit
 
-## Estructura del Proyecto
+## Requisitos Previos
 
-```
-proyecto-i-interprete-matematico/
-├── Notaciones/
-│   ├── Infija.cs          # Evaluador de notación infija
-│   ├── Prefija.cs         # Evaluador de notación prefija
-│   └── Postfija.cs        # Evaluador de notación postfija
-├── Calculadora/
-│   └── Calculadora.cs     # Interfaz de usuario
-├── PruebasNotaciones/
-│   └── Tests...           # Pruebas unitarias
-└── README.md
-```
+- **.NET SDK 8.0** o superior
+- Sistema operativo compatible: Windows, macOS o Linux
+- Editor de código recomendado: Visual Studio Code o Visual Studio
 
-## Notaciones Matemáticas
+## Instalación
 
-### 1. Notación Infija (Infix)
-
-Es la notación **que usamos normalmente**, donde el operador está **entre** los operandos.
-
-```
-Ejemplos:
-3 + 4
-5 * (2 + 3)
-(1 + 2) * (3 + 4)
-```
-
-**Características:**
-- ✓ Natural para humanos
-- ✓ Fácil de leer
-- ✗ Requiere paréntesis para precedencia
-- ✗ Más compleja de evaluar
-
-### 2. Notación Prefija (Prefix / Polish Notation)
-
-El operador está **antes** de los operandos.
-
-```
-Conversión desde infija:
-3 + 4         →  + 3 4
-5 * (2 + 3)   →  * 5 + 2 3
-(1 + 2) * (3 + 4)  →  * + 1 2 + 3 4
-```
-
-**Características:**
-- ✓ No requiere paréntesis
-- ✓ Precedencia implícita en el orden
-- ✗ Menos intuitiva para humanos
-
-### 3. Notación Postfija (Postfix / Reverse Polish Notation - RPN)
-
-El operador está **después** de los operandos.
-
-```
-Conversión desde infija:
-3 + 4         →  3 4 +
-5 * (2 + 3)   →  5 2 3 + *
-(1 + 2) * (3 + 4)  →  1 2 + 3 4 + *
-```
-
-**Características:**
-- ✓ No requiere paréntesis
-- ✓ Muy fácil de evaluar con pila
-- ✓ Usada en calculadoras HP
-- ✗ Menos intuitiva para humanos
-
-## Evaluación de Expresiones
-
-### Algoritmo: Evaluar Notación Postfija
-
-**Más simple de evaluar**, por eso muchos compiladores convierten a postfija primero.
-
-```
-Algoritmo:
-1. Crear pila vacía
-2. Para cada token de izquierda a derecha:
-   a. Si es número: apilar
-   b. Si es operador:
-      - Desapilar dos operandos (segundo, primero)
-      - Calcular: primero operador segundo
-      - Apilar resultado
-3. El resultado final está en el tope de la pila
-```
-
-**Ejemplo paso a paso: 5 2 3 + \***
-
-```
-Token | Pila       | Acción
-------|------------|------------------
-5     | [5]        | Número: apilar 5
-2     | [5, 2]     | Número: apilar 2
-3     | [5, 2, 3]  | Número: apilar 3
-+     | [5, 5]     | Operador: pop(3), pop(2), push(2+3=5)
-*     | [25]       | Operador: pop(5), pop(5), push(5*5=25)
-
-Resultado: 25
-```
-
-**Implementación:**
-
-```csharp
-public static double EvaluarPostfija(string expresion)
-{
-    Pila<double> pila = new Pila<double>();
-    string[] tokens = expresion.Split(' ');
-    
-    foreach (string token in tokens)
-    {
-        if (EsNumero(token))
-        {
-            pila.Push(double.Parse(token));
-        }
-        else if (EsOperador(token))
-        {
-            double segundo = pila.Pop();  // ¡Orden importa!
-            double primero = pila.Pop();
-            double resultado = Operar(primero, segundo, token);
-            pila.Push(resultado);
-        }
-    }
-    
-    return pila.Pop();
-}
-```
-
-**Complejidad:** O(n) donde n = número de tokens
-
-### Algoritmo: Evaluar Notación Prefija
-
-Similar a postfija, pero recorriendo de **derecha a izquierda**.
-
-```
-Algoritmo:
-1. Crear pila vacía
-2. Para cada token de DERECHA a IZQUIERDA:
-   a. Si es número: apilar
-   b. Si es operador:
-      - Desapilar dos operandos (primero, segundo)
-      - Calcular: primero operador segundo
-      - Apilar resultado
-3. El resultado final está en el tope
-```
-
-**Ejemplo paso a paso: \* 5 + 2 3**
-
-```
-Token | Pila       | Acción (de derecha a izquierda)
-------|------------|--------------------------------
-3     | [3]        | Número: apilar 3
-2     | [3, 2]     | Número: apilar 2
-+     | [5]        | Operador: pop(2), pop(3), push(2+3=5)
-5     | [5, 5]     | Número: apilar 5
-*     | [25]       | Operador: pop(5), pop(5), push(5*5=25)
-
-Resultado: 25
-```
-
-### Algoritmo: Evaluar Notación Infija
-
-**Más complejo** porque debe manejar precedencia y paréntesis.
-
-**Enfoque 1: Convertir a postfija y evaluar**
-1. Usar algoritmo Shunting Yard para convertir infija → postfija
-2. Evaluar la expresión postfija
-
-**Enfoque 2: Evaluación directa con dos pilas**
-- Pila de operandos
-- Pila de operadores
-
-## Algoritmo Shunting Yard (Dijkstra)
-
-Convierte notación infija a postfija respetando precedencia.
-
-```
-Algoritmo:
-1. Crear pila de operadores (vacía)
-2. Crear cola de salida (vacía)
-3. Para cada token:
-   
-   a. Si es número:
-      → Agregar a salida
-   
-   b. Si es operador O:
-      → Mientras haya operador en tope de pila con precedencia ≥ O:
-          ├─ Pop del tope → Agregar a salida
-      → Push O a pila
-   
-   c. Si es paréntesis izquierdo '(':
-      → Push a pila
-   
-   d. Si es paréntesis derecho ')':
-      → Mientras tope != '(':
-          ├─ Pop del tope → Agregar a salida
-      → Pop '(' (descartar)
-
-4. Mientras pila no vacía:
-   → Pop → Agregar a salida
-
-5. Salida contiene expresión postfija
-```
-
-### Ejemplo: (1 + 2) \* 3
-
-```
-Token | Pila Operadores | Salida          | Acción
-------|----------------|-----------------|------------------
-(     | [(]            | []              | Push '('
-1     | [(]            | [1]             | Número → salida
-+     | [(, +]         | [1]             | Push '+'
-2     | [(, +]         | [1, 2]          | Número → salida
-)     | []             | [1, 2, +]       | Pop hasta '('
-*     | [*]            | [1, 2, +]       | Push '*'
-3     | [*]            | [1, 2, +, 3]    | Número → salida
-FIN   | []             | [1, 2, +, 3, *] | Pop todo
-
-Postfija: 1 2 + 3 *
-```
-
-**Implementación:**
-
-```csharp
-public static string InfijaAPostfija(string infija)
-{
-    Pila<string> operadores = new Pila<string>();
-    List<string> salida = new List<string>();
-    string[] tokens = Tokenizar(infija);
-    
-    foreach (string token in tokens)
-    {
-        if (EsNumero(token))
-        {
-            salida.Add(token);
-        }
-        else if (token == "(")
-        {
-            operadores.Push(token);
-        }
-        else if (token == ")")
-        {
-            while (operadores.Peek() != "(")
-            {
-                salida.Add(operadores.Pop());
-            }
-            operadores.Pop();  // Descartar '('
-        }
-        else if (EsOperador(token))
-        {
-            while (!operadores.IsEmpty() && 
-                   Precedencia(operadores.Peek()) >= Precedencia(token))
-            {
-                salida.Add(operadores.Pop());
-            }
-            operadores.Push(token);
-        }
-    }
-    
-    while (!operadores.IsEmpty())
-    {
-        salida.Add(operadores.Pop());
-    }
-    
-    return string.Join(" ", salida);
-}
-```
-
-## Precedencia de Operadores
-
-```
-Precedencia (menor a mayor):
-1. + -           (suma, resta)
-2. * /           (multiplicación, división)
-3. ^             (potencia)
-
-Asociatividad:
-• +, -, *, /  → Izquierda a derecha
-• ^           → Derecha a izquierda
-```
-
-**Ejemplo de precedencia:**
-
-```
-Infija:    2 + 3 * 4
-Postfija:  2 3 4 * +   (NO: 2 3 + 4 *)
-Resultado: 14          (NO: 20)
-
-Porque * tiene mayor precedencia que +
-```
-
-## Casos de Uso Reales
-
-### Calculadoras
-
-- **Calculadoras HP:** Usan RPN (postfija)
-- **Compiladores:** Convierten a postfija para generar código
-- **Intérpretes:** Python, JavaScript evalúan expresiones
-
-### Análisis de Expresiones
-
-```csharp
-// Validar sintaxis
-bool esValida = ValidarExpresion("(1 + 2) * 3");
-
-// Simplificar expresiones
-string simplificada = Simplificar("(x + 0) * 1");  // → "x"
-
-// Evaluar con variables
-double resultado = Evaluar("x + y", { x=5, y=3 });  // → 8
-```
-
-## Compilación y Ejecución
-
-### Construir el Proyecto
+1. Clonar el repositorio:
 
 ```bash
+git clone <url-del-repositorio>
 cd proyecto-i-interprete-matematico
-dotnet build ed-interprete-matematico-cs-demo.sln
 ```
 
-### Ejecutar la Calculadora
+2. Restaurar las dependencias:
+
+```bash
+dotnet restore
+```
+
+3. Compilar la solución:
+
+```bash
+dotnet build
+```
+
+## Uso
+
+### Ejecutar el Intérprete
+
+Para iniciar el intérprete matemático interactivo:
 
 ```bash
 dotnet run --project Calculadora/Calculadora.csproj
 ```
 
+Una vez iniciado, el programa mostrará un menú con instrucciones. Las operaciones deben ingresarse con operadores y operandos separados por espacios.
+
 ### Ejecutar Pruebas
+
+Para ejecutar la suite completa de pruebas unitarias:
 
 ```bash
 dotnet test PruebasNotaciones/PruebasNotaciones.csproj
 ```
 
-## Ejemplo de Uso
+Para ejecutar las pruebas con información detallada:
 
-```csharp
-using Notaciones;
-
-// Evaluar postfija
-double resultado1 = Postfija.Evaluar("3 4 +");
-Console.WriteLine(resultado1);  // 7
-
-// Evaluar prefija
-double resultado2 = Prefija.Evaluar("+ 3 4");
-Console.WriteLine(resultado2);  // 7
-
-// Evaluar infija
-double resultado3 = Infija.Evaluar("3 + 4");
-Console.WriteLine(resultado3);  // 7
-
-// Convertir infija a postfija
-string postfija = Infija.APostfija("(1 + 2) * 3");
-Console.WriteLine(postfija);  // "1 2 + 3 *"
-
-// Evaluar expresión compleja
-double resultado4 = Infija.Evaluar("(2 + 3) * (4 - 1)");
-Console.WriteLine(resultado4);  // 15
+```bash
+dotnet test PruebasNotaciones/PruebasNotaciones.csproj --verbosity normal
 ```
+
+## Notaciones Soportadas
+
+### Notación Prefija (Polaca)
+
+El operador precede a los operandos.
+
+**Formato**: `operador operando1 operando2`
+
+Para cambiar a esta notación, escriba: `:Prefija`
+
+### Notación Infija (Estándar)
+
+El operador se ubica entre los operandos. Requiere paréntesis para definir precedencia.
+
+**Formato**: `operando1 operador operando2`
+
+Para cambiar a esta notación, escriba: `:Infija`
+
+### Notación Postfija (Polaca Inversa)
+
+El operador sigue a los operandos.
+
+**Formato**: `operando1 operando2 operador`
+
+Para cambiar a esta notación, escriba: `:Postfija`
 
 ## Operadores Soportados
 
-| Operador | Nombre | Ejemplo | Resultado |
-|----------|--------|---------|-----------|
-| + | Suma | 3 + 4 | 7 |
-| - | Resta | 5 - 2 | 3 |
-| * | Multiplicación | 3 * 4 | 12 |
-| / | División | 8 / 2 | 4 |
-| ^ | Potencia | 2 ^ 3 | 8 |
-| ( ) | Paréntesis | (1 + 2) * 3 | 9 |
+| Operador | Operación       | Precedencia |
+|----------|-----------------|-------------|
+| `+`      | Suma            | 1           |
+| `-`      | Resta           | 1           |
+| `*`      | Multiplicación  | 2           |
+| `/`      | División        | 2           |
+| `%`      | Módulo          | 2           |
 
-## Validación de Expresiones
+Los paréntesis `()` son soportados únicamente en notación infija para controlar el orden de evaluación.
 
-### Errores Comunes
-
-```csharp
-// División por cero
-Infija.Evaluar("5 / 0");  // ❌ DivideByZeroException
-
-// Paréntesis desbalanceados
-Infija.Evaluar("(1 + 2");  // ❌ InvalidExpressionException
-
-// Operador sin operandos
-Postfija.Evaluar("3 +");  // ❌ InvalidExpressionException
-
-// Operandos sin operador
-Infija.Evaluar("3 4");  // ❌ InvalidExpressionException
-```
-
-## Complejidad del Proyecto
-
-| Algoritmo | Complejidad Temporal | Complejidad Espacial |
-|-----------|---------------------|----------------------|
-| Evaluar Postfija | O(n) | O(n) |
-| Evaluar Prefija | O(n) | O(n) |
-| Infija → Postfija | O(n) | O(n) |
-| Evaluar Infija | O(n) | O(n) |
-
-Donde n = número de tokens en la expresión.
-
-## Extensiones Posibles
-
-### 1. Funciones Matemáticas
-
-```csharp
-// Soportar funciones
-Evaluar("sin(3.14159)");
-Evaluar("sqrt(16)");
-Evaluar("log(100)");
-```
-
-### 2. Variables
-
-```csharp
-// Soportar variables
-Dictionary<string, double> vars = new() { ["x"] = 5, ["y"] = 3 };
-Evaluar("x + y * 2", vars);  // 11
-```
-
-### 3. Evaluación Simbólica
-
-```csharp
-// Simplificación algebraica
-Simplificar("x + x");  // "2*x"
-Simplificar("x * 0");  // "0"
-```
-
-## Aplicaciones en el Mundo Real
-
-### Compiladores
+## Estructura del Proyecto
 
 ```
-Código fuente → Parser → Árbol sintáctico → Postfija → Código máquina
+proyecto-i-interprete-matematico/
+├── Calculadora/
+│   ├── Calculadora.csproj       # Proyecto de consola principal
+│   └── Programa.cs              # Interfaz de usuario y lógica de entrada
+├── Notaciones/
+│   ├── Notaciones.csproj        # Biblioteca de clases
+│   ├── Evaluación.cs            # Lógica de evaluación de expresiones
+│   └── Opciones.cs              # Enumeración de tipos de notación
+├── PruebasNotaciones/
+│   ├── PruebasNotaciones.csproj # Proyecto de pruebas unitarias
+│   ├── PruebasCalculadora.cs    # Pruebas de la calculadora
+│   ├── PruebasNotaciones.cs     # Pruebas de notaciones
+│   ├── PruebasUnitarias.cs      # Pruebas unitarias adicionales
+│   └── Usings.cs                # Referencias globales
+├── ed-interprete-matematico-cs-demo.sln  # Solución de Visual Studio
+├── Respuestas_Preguntas.pdf     # Documentación del proyecto
+└── README.md                     # Este archivo
 ```
 
-### Hojas de Cálculo
+## Ejemplos de Uso
 
-Excel, Google Sheets evalúan fórmulas usando técnicas similares.
+### Ejemplo 1: Notación Prefija
 
-### Lenguajes de Programación
+```
+Digite su operacion: + 3 5
+        + 3 5 = 8
 
-Todos los lenguajes deben evaluar expresiones aritméticas correctamente.
+Digite su operacion: * + 2 3 4
+        * + 2 3 4 = 20
+```
 
-## Recursos y Referencias
+### Ejemplo 2: Notación Infija
 
-### Documentación
-- [Pilas - Teoría](../../docs/estructuras-datos/pilas.md)
-- [Algoritmo Shunting Yard](https://en.wikipedia.org/wiki/Shunting-yard_algorithm)
+```
+Digite su operacion: :Infija
+Digite su operacion: ( 3 + 5 ) * 2
+        ( 3 + 5 ) * 2 = 16
 
-### Práctica Relacionada
-- [Práctica 4: Pila con Referencias](../practica-4-pila-con-referencias)
+Digite su operacion: 10 / ( 2 + 3 )
+        10 / ( 2 + 3 ) = 2
+```
 
-### Lecturas Adicionales
-- "Compilers: Principles, Techniques, and Tools" (Dragon Book)
-- "Introduction to Algorithms" (CLRS) - Capítulo sobre pilas
+### Ejemplo 3: Notación Postfija
+
+```
+Digite su operacion: :Postfija
+Digite su operacion: 3 5 +
+        3 5 + = 8
+
+Digite su operacion: 2 3 + 4 *
+        2 3 + 4 * = 20
+```
+
+## Implementación
+
+### Algoritmos Principales
+
+**Evaluación Postfija**
+- Utiliza una pila para almacenar operandos
+- Procesa los símbolos de izquierda a derecha
+- Al encontrar un operador, extrae dos operandos de la pila, realiza la operación y apila el resultado
+
+**Evaluación Prefija**
+- Convierte la expresión prefija a postfija invirtiendo el arreglo de símbolos
+- Utiliza una pila para reconstruir la expresión en notación postfija
+- Evalúa la expresión resultante usando el algoritmo postfijo
+
+**Evaluación Infija**
+- Convierte la expresión infija a postfija usando el algoritmo de Shunting Yard
+- Utiliza una pila para operadores y una cola para la salida
+- Respeta la precedencia de operadores y maneja paréntesis
+- Evalúa la expresión postfija resultante
+
+### Estructuras de Datos
+
+- **Stack\<T\>**: Utilizada para almacenar operadores y operandos durante la evaluación
+- **Queue\<T\>**: Utilizada para generar la salida en el algoritmo de conversión infija a postfija
+- **LinkedList\<T\>**: Utilizada para procesar tokens durante el análisis léxico
+
+## Construcción del Proyecto
+
+Si necesita recrear la estructura del proyecto desde cero, puede utilizar los siguientes comandos:
+
+```bash
+# Crear la solución
+dotnet new sln -n ed-interprete-matematico-cs-demo
+
+# Crear la biblioteca de clases
+dotnet new classlib -o Notaciones
+dotnet sln add Notaciones/Notaciones.csproj
+
+# Crear la aplicación de consola
+dotnet new console -o Calculadora
+dotnet sln add Calculadora/Calculadora.csproj
+dotnet add Calculadora/Calculadora.csproj reference Notaciones/Notaciones.csproj
+
+# Crear el proyecto de pruebas
+dotnet new nunit -o PruebasNotaciones
+dotnet sln add PruebasNotaciones/PruebasNotaciones.csproj
+dotnet add PruebasNotaciones/PruebasNotaciones.csproj reference Notaciones/Notaciones.csproj
+dotnet add PruebasNotaciones/PruebasNotaciones.csproj reference Calculadora/Calculadora.csproj
+```
+
+## Tecnologías Utilizadas
+
+- **Lenguaje**: C# 12
+- **Framework**: .NET 8.0
+- **Testing**: NUnit 4.2.2
+- **Paradigma**: Programación Orientada a Objetos
+
+## Autor
+
+Proyecto desarrollado para el curso de Estructuras de Datos - UNAM
 
 ---
 
-<div align="center">
-
-![Notations](https://img.shields.io/badge/Notaciones-Infija%20|%20Prefija%20|%20Postfija-blue?style=flat-square)
-![Stack](https://img.shields.io/badge/Estructura-Pila-orange?style=flat-square)
-![O(n)](https://img.shields.io/badge/Complejidad-O(n)-success?style=flat-square)
-
-**Facultad de Ciencias - UNAM**
-
-*Estructuras de Datos y Algoritmos - Proyecto Integrador*
-
-</div>
+**Nota**: Este proyecto es con fines educativos. Para salir del intérprete, escriba `Salir` en cualquier momento.
