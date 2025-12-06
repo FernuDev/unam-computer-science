@@ -1,7 +1,15 @@
 <div align="center">
 
-<img src="assets/Escudo-UNAM-.svg" alt="UNAM" width="150"/>
-<img src="assets/fciencias-logo.svg" alt="Facultad de Ciencias" width="150"/>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/Escudo-UNAM-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/Escudo-UNAM-light.svg">
+  <img src="assets/Escudo-UNAM-light.svg" alt="UNAM" width="150">
+</picture>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/fciencias-logo-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/fciencias-logo-light.svg">
+  <img src="assets/fciencias-logo-light.svg" alt="Facultad de Ciencias" width="150">
+</picture>
 
 # Ciencias de la Computación UNAM
 
