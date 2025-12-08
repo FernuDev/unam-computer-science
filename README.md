@@ -31,6 +31,8 @@
 ## Índice
 
 - [Sobre este Repositorio](#sobre-este-repositorio)
+- [Programación Básica](#programación-básica)
+  - [Proyectos](#proyectos-básicos)
 - [Estructuras de Datos y Algoritmos](#estructuras-de-datos-y-algoritmos)
   - [Prácticas](#prácticas)
   - [Proyectos](#proyectos)
@@ -49,9 +51,34 @@
 
 ## Sobre este Repositorio
 
-Este repositorio contiene todas las implementaciones, ejercicios y proyectos desarrollados durante las materias de **Estructuras de Datos y Algoritmos**, **Simulación y Modelado de Software** y **Física Computacional** en la Facultad de Ciencias de la UNAM.
+Este repositorio contiene todas las implementaciones, ejercicios y proyectos desarrollados durante las materias de **Programación Básica**, **Estructuras de Datos y Algoritmos**, **Simulación y Modelado de Software** y **Física Computacional** en la Facultad de Ciencias de la UNAM.
 
 El objetivo es mantener un registro organizado del aprendizaje, compartir soluciones y servir como referencia para futuros estudiantes.
+
+---
+
+## Programación Básica
+
+![C](https://img.shields.io/badge/Lenguaje-C-A8B9CC?style=flat-square&logo=c)
+![C++](https://img.shields.io/badge/Lenguaje-C++-00599C?style=flat-square&logo=cplusplus)
+![Arduino](https://img.shields.io/badge/Platform-Arduino-00979D?style=flat-square&logo=arduino)
+
+### Proyectos Básicos
+
+| # | Proyecto | Descripción | Tecnologías |
+|---|----------|-------------|-------------|
+| 1 | [Serial Reader](basic-programming) | Comunicación serial con Arduino y sensor ultrasónico | C, Arduino |
+| 2 | [Operating System Interface](basic-programming) | Llamadas al sistema operativo de bajo nivel | C |
+| 3 | [Async Programming](basic-programming) | Programación asíncrona y multithreading | C++ |
+| 4 | [Time Testing](basic-programming) | Medición y análisis de tiempos de ejecución | C++ |
+| 5 | [ESP32 Integration](basic-programming) | Código para microcontrolador ESP32 | Arduino |
+
+**Características generales:**
+- Comunicación serial UART
+- Sistemas embebidos
+- Programación de bajo nivel
+- Interfaz hardware-software
+- CMake build system
 
 ---
 
@@ -175,6 +202,11 @@ Simulación avanzada de sistemas dinámicos con visualización de trayectorias, 
 
 ```
 unam-computer-science/
+├── basic-programming/             # Programación Básica
+│   ├── src/                       # Código fuente C/C++/Arduino
+│   ├── Build/                     # Ejecutables compilados
+│   └── CMakeLists.txt             # Configuración CMake
+│
 ├── dsa-dotnet/                    # Estructuras de Datos y Algoritmos
 │   ├── practica-XX-nombre/        # Prácticas numeradas
 │   └── proyecto-X-nombre/         # Proyectos principales
@@ -187,6 +219,11 @@ unam-computer-science/
 │   ├── examen_X/                  # Exámenes parciales
 │   └── proyecto_final/            # Proyecto final del semestre
 │
+├── docs/                          # Documentación conceptual
+│   ├── estructuras-datos/         # Teoría de estructuras
+│   ├── algoritmos/                # Teoría de algoritmos
+│   └── analisis/                  # Análisis de complejidad
+│
 └── assets/                        # Recursos visuales
     ├── Escudo-UNAM-.svg
     └── fciencias-logo.svg
@@ -197,6 +234,27 @@ unam-computer-science/
 ## Instalación y Uso
 
 ### Requisitos Previos
+
+**Para Programación Básica (C/C++):**
+```bash
+# Linux
+sudo apt-get install build-essential cmake
+
+# macOS
+brew install cmake gcc
+
+# Windows
+# Instalar MinGW o Visual Studio C++ tools
+```
+
+**Para Arduino:**
+```bash
+# Instalar Arduino IDE
+# Descargar desde: https://www.arduino.cc/en/software
+
+# Permisos serial (Linux)
+sudo usermod -a -G dialout $USER
+```
 
 **Para Estructuras de Datos (.NET/C#):**
 ```bash
@@ -229,6 +287,19 @@ pip install -r fisica-computacional/requirements.txt
 ```
 
 ### Compilar y Ejecutar
+
+**Proyectos C/C++ (Programación Básica):**
+```bash
+cd basic-programming
+mkdir Build && cd Build
+cmake ..
+make
+
+# Ejecutar
+./Serial        # Serial reader
+./OperatingSystem
+./AsyncProgram
+```
 
 **Proyectos C#:**
 ```bash
