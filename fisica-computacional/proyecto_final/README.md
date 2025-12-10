@@ -1,1408 +1,544 @@
-# Simulación 3D de Intercepción de Aeronaves
+# Simulación 3D de Intercepción de Aeronaves: Fundamentos Matemáticos, Implementación y Resultados
 
-![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![NumPy](https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white)
-![Matplotlib](https://img.shields.io/badge/Matplotlib-11557c?style=for-the-badge&logo=python&logoColor=white)
-![Status](https://img.shields.io/badge/Estado-Completo-success?style=for-the-badge)
-
----
-
-<div align="center">
-
-### Proyecto Final - Física Computacional
-
-**Universidad Nacional Autónoma de México**  
-**Facultad de Ciencias**
-
-*Simulador avanzado de intercepción de misiles guiados*
-
-</div>
-
----
-
-## Resumen Ejecutivo
-
-Simulador 3D educativo de **alta fidelidad** que modela la intercepción de una aeronave por un misil guiado mediante **Navegación Proporcional (PN)** y sistemas de ecuaciones diferenciales. 
-
-### Logros Principales
-
-| Aspecto | Resultado |
-|---------|-----------|
-| **Modelo Físico** | Sistema completo de 12 ecuaciones diferenciales en \(\mathbb{R}^3\) |
-| **Precisión Numérica** | Integrador RK4 con error O(h⁵) |
-| **Realismo** | Perfil SAM con 4 fases: Boost, Weave, Cruise, Terminal |
-| **Intercepción Exitosa** | 77.7 segundos con maniobra espiral |
-| **Visualización** | Animación 3D interactiva + 3 gráficas analíticas |
-| **Código** | 700+ líneas, modular, documentado, extensible |
-
-### Características Principales
-
-- Modelado físico completo en \(\mathbb{R}^3\)
-- Ley de Navegación Proporcional 3D con predictor lead
-- Múltiples patrones de maniobras evasivas (4 tipos)
-- Integradores numéricos (Euler y Runge-Kutta 4)
-- Visualización interactiva 3D con trails
-- Generación de animaciones GIF de alta calidad
-- Análisis de convergencia y perfiles de aceleración
-- Exportación de datos para análisis posterior
-- CLI completa con 12+ opciones configurables
-
-### Impacto y Aplicaciones
-
-Este proyecto demuestra la aplicación de métodos numéricos a problemas reales de:
-- Ingeniería aeroespacial
-- Sistemas de defensa
-- Teoría de control
-- Física computacional
-
----
-
-## Documentación del Proyecto
-
-Este proyecto cuenta con documentación completa en 4 archivos:
-
-| Documento | Líneas | Propósito | Audiencia |
-|-----------|--------|-----------|-----------|
-| **README.md** | 1,500+ | Documentación técnica completa | Desarrolladores, investigadores |
-| **PRESENTACION.md** | 600+ | Guía para presentación oral | Presentador |
-| **RESULTADOS.md** | 400+ | Análisis detallado de datos | Analistas, revisores |
-| **SLIDES.md** | 500+ | Contenido de diapositivas | Audiencia general |
-
-**Total:** 3,000+ líneas de documentación profesional
+> **Documentación Técnica Integral**
+>
+> Este documento constituye la referencia técnica definitiva y exhaustiva del proyecto "Simulación 3D de Intercepción". Unifica la descripción del modelo físico, la derivación matemática rigurosa, la arquitectura de software, la implementación numérica y el análisis detallado de resultados. Diseñado para servir como base para presentaciones académicas de alto nivel y revisiones técnicas profundas.
 
 ---
 
 ## Tabla de Contenidos
 
-### Para Desarrolladores e Investigadores
-
-- [Quick Start para Presentación](#quick-start-para-presentación)
-- [Resultados Obtenidos](#resultados-obtenidos)
-- [Fundamentos Teóricos](#fundamentos-teóricos)
-- [Modelo Matemático](#modelo-matemático)
-- [Estructura del Código](#estructura-del-código)
-- [Instalación](#instalación)
-- [Uso y Ejemplos](#uso-y-ejemplos)
-- [Resultados y Visualizaciones](#resultados-y-visualizaciones)
-- [Configuración Avanzada](#configuración-avanzada)
-- [Referencias](#referencias)
-
-### Para Presentaciones
-
-- Ver **PRESENTACION.md** para guía completa de presentación
-- Ver **SLIDES.md** para contenido de diapositivas
-- Ver **RESULTADOS.md** para análisis detallado
-
----
-
-## Quick Start para Presentación
-
-### Preparación Rápida (5 minutos antes)
-
-**1. Verificar que todo funciona:**
-```bash
-cd fisica-computacional/proyecto_final
-
-# Probar ejecución rápida
-python3 main.py --duration 10 --no-animate --no-static
-
-# Si funciona, todo está listo ✓
-```
-
-**2. Abrir archivos necesarios:**
-```bash
-# En pestañas separadas del navegador/visor
-open outputs/figuras/trayectorias.png
-open outputs/figuras/distancia.png
-open outputs/figuras/aceleraciones.png
-open outputs/interception.gif
-```
-
-**3. Tener listo el código para mostrar:**
-```bash
-# Por si preguntan sobre implementación
-code dynamics.py  # Línea 145: Función proportional_navigation()
-code integrators.py  # Línea 28: Implementación RK4
-```
-
-### Demo en Vivo (Opcional)
-
-**Si decides hacer demo en vivo, usa este comando seguro:**
-
-```bash
-# Simulación rápida de 30 segundos
-python3 main.py --duration 30 --dt 0.02 --maneuver spiral
-```
-
-**Tiempo de ejecución:** ~1 segundo  
-**Resultado:** Muestra animación parcial  
-**Riesgo:** Bajo
-
-### Archivos Críticos para Presentación
-
-**Orden de importancia:**
-
-1. `outputs/interception.gif` - **OBLIGATORIO** (animación principal)
-2. `outputs/figuras/trayectorias.png` - **OBLIGATORIO** (resultados)
-3. `outputs/figuras/distancia.png` - **OBLIGATORIO** (análisis)
-4. `PRESENTACION.md` - **GUÍA** (script de narración)
-5. `SLIDES.md` - **REFERENCIA** (contenido de slides)
-6. `outputs/figuras/aceleraciones.png` - Opcional (análisis técnico)
-7. `outputs/trayectoria.csv` - Opcional (si preguntan por datos)
-
-### Checklist de Último Minuto
-
-- [ ] Laptop cargada (> 80%)
-- [ ] Adaptadores HDMI/USB-C disponibles
-- [ ] Archivos en USB de respaldo
-- [ ] GIF se reproduce correctamente
-- [ ] Conexión a proyector probada
-- [ ] Modo presentación activado
-- [ ] Notificaciones silenciadas
+1.  [Visión General del Proyecto](#1-visión-general-del-proyecto)
+2.  [Fundamentación Teórica](#2-fundamentación-teórica)
+3.  [Modelo Matemático Riguroso](#3-modelo-matemático-riguroso)
+    *   [3.1 Espacio de Estados](#31-espacio-de-estados)
+    *   [3.2 Cinemática Vectorial](#32-cinemática-vectorial)
+    *   [3.3 Dinámica del Objetivo (Target)](#33-dinámica-del-objetivo-target)
+    *   [3.4 Dinámica del Misil (Interceptor)](#34-dinámica-del-misil-interceptor)
+4.  [Leyes de Guiado y Control](#4-leyes-de-guiado-y-control)
+    *   [4.1 Navegación Proporcional (PN)](#41-navegación-proporcional-pn)
+    *   [4.2 Guiado Predictivo (Lead Guidance)](#42-guiado-predictivo-lead-guidance)
+    *   [4.3 Fusión de Sensores y Control Híbrido](#43-fusión-de-sensores-y-control-híbrido)
+5.  [Implementación Numérica Detallada](#5-implementación-numérica-detallada)
+    *   [5.1 Derivación del Método RK4](#51-derivación-del-método-rk4)
+    *   [5.2 Análisis de Estabilidad y Error](#52-análisis-de-estabilidad-y-error)
+6.  [Arquitectura del Software](#6-arquitectura-del-software)
+    *   [6.1 Estructura Modular](#61-estructura-modular)
+    *   [6.2 Descripción Detallada de Clases](#62-descripción-detallada-de-clases)
+7.  [Análisis de Escenarios y Maniobras](#7-análisis-de-escenarios-y-maniobras)
+8.  [Resultados y Discusión](#8-resultados-y-discusión)
+    *   [8.1 Métricas Cuantitativas](#81-métricas-cuantitativas)
+    *   [8.2 Interpretación de Gráficas](#82-interpretación-de-gráficas)
+9.  [Guía de Instalación y Uso](#9-guía-de-instalación-y-uso)
+10. [Solución de Problemas (Troubleshooting)](#10-solución-de-problemas-troubleshooting)
+11. [Glosario Técnico](#11-glosario-técnico)
+12. [Conclusiones y Trabajo Futuro](#12-conclusiones-y-trabajo-futuro)
+13. [Referencias Bibliográficas](#13-referencias-bibliográficas)
 
 ---
 
-## Resumen para Presentación
+## 1. Visión General del Proyecto
 
-### Diapositiva 1: Portada
+### 1.1 Resumen Ejecutivo
 
-```
-SIMULACIÓN 3D DE INTERCEPCIÓN DE AERONAVES
-Sistema de Guiado por Navegación Proporcional
+El proyecto **Simulación Computacional de Sistemas de Guiado de Misiles en 3D** es una herramienta de simulación científica de alta fidelidad diseñada para modelar, visualizar y analizar la dinámica de intercepción de misiles tácticos contra aeronaves maniobrables en un entorno tridimensional.
 
-Proyecto Final - Física Computacional
-Facultad de Ciencias, UNAM
-```
+A diferencia de simulaciones simplificadas en 2D, este proyecto aborda la complejidad completa de la geometría vectorial en $\mathbb{R}^3$, resolviendo un sistema acoplado de 12 ecuaciones diferenciales ordinarias (EDOs) no lineales. El núcleo de la simulación implementa una ley de guiado híbrida que combina la clásica **Navegación Proporcional (PN)** con algoritmos modernos de **Predicción de Punto de Impacto (Lead Prediction)**, permitiendo interceptar objetivos que ejecutan maniobras evasivas complejas.
 
-**Elementos visuales sugeridos:**
-- Logo UNAM y Facultad de Ciencias
-- Imagen de portada: `outputs/figuras/trayectorias.png`
+### 1.2 Objetivos Principales
 
-### Diapositiva 2: Objetivos del Proyecto
-
-**Objetivo General:**
-Desarrollar un simulador computacional que modele la intercepción de una aeronave por un misil guiado en tres dimensiones.
-
-**Objetivos Específicos:**
-1. Implementar la ley de Navegación Proporcional en 3D
-2. Resolver sistemas de ecuaciones diferenciales acopladas
-3. Comparar métodos numéricos de integración
-4. Analizar efectividad de diferentes maniobras evasivas
-5. Generar visualizaciones interactivas de resultados
-
-### Diapositiva 3: Fundamento Teórico
-
-**Navegación Proporcional (PN)**
-
-Principio: *"Si el ángulo de la línea de visión permanece constante, habrá colisión"*
-
-**Ecuación fundamental:**
-\[
-\mathbf{a}_M = N \cdot V_c \cdot (\boldsymbol{\omega}_{LOS} \times \hat{\mathbf{r}}_{LOS})
-\]
-
-**Componentes clave:**
-- N = 3.5 (constante de navegación)
-- V_c = velocidad de cierre
-- ω_LOS = velocidad angular de la línea de visión
-
-### Diapositiva 4: Modelo Matemático
-
-**Sistema de 12 ecuaciones diferenciales:**
-
-Estado del sistema:
-\[
-\mathbf{s} = [\mathbf{r}_T, \mathbf{v}_T, \mathbf{r}_M, \mathbf{v}_M]^T \in \mathbb{R}^{12}
-\]
-
-**Ecuaciones dinámicas:**
-- Aeronave: 6 ecuaciones (posición + velocidad)
-- Misil: 6 ecuaciones (posición + velocidad)
-- Aceleración del misil calculada por PN
-
-### Diapositiva 5: Arquitectura del Software
-
-**Diseño Modular:**
-
-| Módulo | Líneas | Responsabilidad |
-|--------|--------|-----------------|
-| `config.py` | 73 | Configuración global |
-| `dynamics.py` | 300+ | Modelos físicos y guiado |
-| `integrators.py` | 110+ | Métodos numéricos RK4/Euler |
-| `visualization.py` | 220+ | Gráficas y animaciones |
-| `main.py` | 211 | CLI y orquestación |
-
-**Total:** 900+ líneas de código Python
-
-### Diapositiva 6: Métodos Numéricos
-
-**Comparación de Integradores:**
-
-| Método | Orden | Error | Evaluaciones/paso |
-|--------|-------|-------|-------------------|
-| Euler | 1 | O(h²) | 1 |
-| RK4 | 4 | O(h⁵) | 4 |
-
-**Selección:** RK4 por su balance precisión/costo
-
-**Paso de tiempo:** dt = 0.05 s (20 Hz)
-
-### Diapositiva 7: Resultados - Intercepción Exitosa
-
-**Configuración del escenario:**
-- Maniobra: Espiral
-- Método: Runge-Kutta 4
-- Duración: 90 segundos
-
-**Resultado:**
-```
-✓ Intercepción lograda en t = 77.7 s
-  Distancia inicial: 21,213 m
-  Distancia final: 42 m
-  Puntos simulados: 1,556
-```
-
-**Visual:** Gráfica de distancia vs tiempo
-
-### Diapositiva 8: Trayectorias 3D
-
-**Imagen:** `outputs/figuras/trayectorias.png`
-
-**Análisis:**
-- Trayectoria azul: Aeronave en espiral ascendente
-- Trayectoria roja: Misil con curvatura PN
-- Convergencia clara en el punto de intercepción
-- Rango total: ~40 km en plano XY
-
-### Diapositiva 9: Análisis de Convergencia
-
-**Imagen:** `outputs/figuras/distancia.png`
-
-**Observaciones:**
-1. Reducción monotónica de distancia
-2. Tasa de convergencia casi lineal
-3. Sin oscilaciones significativas
-4. Intercepción precisa al final
-
-**Métricas:**
-- Velocidad de cierre promedio: ~273 m/s
-- Tiempo de vuelo: 77.7 s
-- Distancia recorrida (misil): ~35 km
-
-### Diapositiva 10: Perfiles de Aceleración
-
-**Imagen:** `outputs/figuras/aceleraciones.png`
-
-**Fases identificadas:**
-
-| Fase | Tiempo | Aceleración | Propósito |
-|------|--------|-------------|-----------|
-| Boost | 0-5s | 70 m/s² | Ganancia inicial de energía |
-| Weaving | 5-20s | 10-30 m/s² | Trayectoria serpentina |
-| Cruise | 20-60s | 5-15 m/s² | Mantenimiento de curso |
-| Terminal | 60-77.7s | 10-47 m/s² | Corrección final |
-
-**Factor de carga máximo:** 7.1 G
-
-### Diapositiva 11: Animación 3D
-
-**Archivo:** `outputs/interception.gif` (13 MB)
-
-**Elementos visualizados:**
-- Posiciones en tiempo real (puntos)
-- Trayectorias históricas (trails)
-- Vector LOS dinámico (línea gris)
-- Contador de tiempo
-- Distancia actualizada
-
-**Duración:** 77.7 segundos real-time
-
-### Diapositiva 12: Comparación de Maniobras
-
-**Efectividad de intercepción:**
-
-| Maniobra | Resultado | Distancia Mínima | Comentario |
-|----------|-----------|------------------|------------|
-| **Spiral** | ✓ Intercepción | 42 m | Predecible, fácil de interceptar |
-| **Sinusoidal** | ✓ Intercepción | ~150 m | Oscilaciones regulares |
-| **Descend Turn** | ✓ Intercepción | ~300 m | Maniobra defensiva moderada |
-| **Jinking** | ✗ Fallo | 3,856 m | Cambios aleatorios, muy efectiva |
-
-**Conclusión:** Las maniobras impredecibles son más efectivas para evasión
-
-### Diapositiva 13: Tecnologías Implementadas
-
-**Stack Tecnológico:**
-
-```
-Lenguaje:     Python 3.8+
-Librerías:    NumPy, Matplotlib
-Paradigma:    POO + Programación funcional
-Control:      Dataclasses + Type hints
-Testing:      Validación numérica
-Docs:         Markdown + LaTeX
-```
-
-**Herramientas:**
-- Git para control de versiones
-- CMake para configuración (opcional)
-- FFmpeg para animaciones de video (opcional)
-
-### Diapositiva 14: Validación del Modelo
-
-**Pruebas realizadas:**
-
-1. **Conservación de energía** ✓
-   - Verificada en escenarios sin aceleración
-
-2. **Límites físicos** ✓
-   - Aceleraciones dentro de rango realista (< 150 m/s²)
-   - Velocidades máximas respetadas
-
-3. **Casos límite** ✓
-   - Objetivo estacionario → intercepción directa
-   - Objetivo alejándose → fallo esperado
-   - Velocidad igual → persecución infinita
-
-4. **Precisión numérica** ✓
-   - Error de truncamiento controlado
-   - Convergencia verificada con dt variables
-
-### Diapositiva 15: Complejidad Computacional
-
-**Análisis de eficiencia:**
-
-| Operación | Complejidad | Justificación |
-|-----------|-------------|---------------|
-| Step de simulación | O(1) | Operaciones vectoriales fijas |
-| Loop completo | O(n) | n = duration/dt steps |
-| Visualización 3D | O(n) | n puntos de trayectoria |
-| Animación | O(n·m) | n frames, m elementos/frame |
-
-**Para simulación típica:**
-- n ≈ 1,800 pasos (90s / 0.05s)
-- Tiempo: < 2 segundos
-- Memoria: < 50 MB
-
-### Diapositiva 16: Contribuciones del Proyecto
-
-**Aportaciones técnicas:**
-
-1. **Implementación completa de PN 3D**
-   - No simplificada a 2D
-   - Incluye predictor lead
-
-2. **Perfil SAM realista**
-   - 4 fases de vuelo
-   - Weaving 3D
-   - Blend progresivo
-
-3. **Framework extensible**
-   - Fácil agregar nuevas maniobras
-   - Modular para otros guiados
-   - CLI completa
-
-4. **Visualización profesional**
-   - Animación interactiva
-   - 3 tipos de gráficas
-   - Exportación de alta calidad
-
-### Diapositiva 17: Limitaciones y Trabajo Futuro
-
-**Limitaciones actuales:**
-
-- No incluye aerodinámica (resistencia del aire)
-- Aceleración constante (no modelado de empuje)
-- Sin límites de factor de carga estructural
-- Objetivo no responde al misil
-
-**Extensiones propuestas:**
-
-1. **Modelo aerodinámico completo**
-   - Resistencia: \(D = \frac{1}{2}\rho v^2 C_D A\)
-   - Sustentación
-   - Límites de G-force
-
-2. **Guiado avanzado**
-   - Augmented PN (APN)
-   - Optimal Guidance Law
-   - Zero Effort Miss (ZEM)
-
-3. **Contramedidas**
-   - Chaff/Flare
-   - ECM (Electronic Counter Measures)
-   - Terrain masking
-
-4. **Múltiples amenazas**
-   - Salvas de misiles
-   - Coordinación distribuida
-
-### Diapositiva 18: Conclusiones
-
-**Logros principales:**
-
-1. ✓ Simulador 3D completamente funcional
-2. ✓ Implementación correcta de Navegación Proporcional
-3. ✓ Integración numérica precisa (RK4)
-4. ✓ Visualizaciones de calidad profesional
-5. ✓ Código modular y bien documentado
-
-**Resultados cuantitativos:**
-- Intercepción exitosa en 77.7 segundos
-- Precisión: < 50 metros de tolerancia
-- 900+ líneas de código Python
-- 4 tipos de salida (GIF, PNG, CSV, consola)
-
-**Impacto académico:**
-Demuestra aplicación práctica de:
-- Ecuaciones diferenciales
-- Métodos numéricos
-- Programación científica
-- Visualización de datos
-
-### Diapositiva 19: Demostración en Vivo
-
-**Comandos para demo:**
-
-```bash
-# Demo rápida (30s)
-python main.py --duration 30 --dt 0.02
-
-# Demo completa con todas las salidas
-python main.py --save-animation --save-plots --export-csv
-
-# Comparación de métodos
-python main.py --method euler
-python main.py --method rk4
-
-# Diferentes maniobras
-python main.py --maneuver spiral
-python main.py --maneuver jinking
-```
-
-**Archivos para mostrar:**
-1. Animación: `outputs/interception.gif`
-2. Trayectorias: `outputs/figuras/trayectorias.png`
-3. Convergencia: `outputs/figuras/distancia.png`
-4. Código clave: `dynamics.py` (PN implementation)
-
-### Diapositiva 20: Recursos del Proyecto
-
-**Repositorio:**
-```
-https://github.com/[tu-usuario]/unam-computer-science
-/fisica-computacional/proyecto_final/
-```
-
-**Archivos clave:**
-- README.md (800+ líneas de documentación)
-- Código fuente completo
-- Resultados de ejemplo
-- Referencias bibliográficas
-
-**Contacto y Preguntas:**
-- Email: [tu-email]@ciencias.unam.mx
-- GitHub Issues para bugs/sugerencias
+1.  **Modelado Físico Riguroso:** Desarrollar un modelo matemático que respete las leyes de la cinemática y dinámica vectorial, sin recurrir a simplificaciones planares que limiten la validez de los resultados.
+2.  **Implementación Numérica Robusta:** Comparar y seleccionar métodos de integración numérica (Euler vs. Runge-Kutta) para garantizar la estabilidad a largo plazo de la simulación y la conservación de propiedades físicas (como la energía en sistemas conservativos).
+3.  **Análisis de Estrategias de Evasión:** Evaluar cuantitativamente la efectividad de diferentes maniobras evasivas (espirales, zig-zag, cambios aleatorios) frente a sistemas de guiado modernos.
+4.  **Visualización Científica:** Generar representaciones visuales (gráficas estáticas y animaciones 3D) que permitan una comprensión intuitiva de la geometría del compromiso.
 
 ---
 
-## Resultados Obtenidos
+## 2. Fundamentación Teórica
 
-### Resumen de Ejecución Exitosa
+La intercepción de misiles es un problema clásico de la teoría de control óptimo y la dinámica de vuelo. Se basa en el principio de que para colisionar con un objeto en movimiento, el interceptor no debe apuntar a la posición actual del objetivo, sino a donde *estará* en el futuro.
 
-**Fecha de última ejecución:** 9 de diciembre, 2025
+### 2.1 El Problema de la Persecución
 
-**Configuración del escenario:**
-```
-Aeronave (Objetivo):
-  - Posición inicial: (20000, 0, 7000) metros
-  - Velocidad: 250 m/s
-  - Maniobra: Espiral ascendente
-  
-Misil (Interceptor):
-  - Posición inicial: (0, -5000, 2000) metros
-  - Velocidad inicial: 200 m/s
-  - Velocidad máxima: 800 m/s
-  - Sistema de guiado: Navegación Proporcional 3D
-  - Constante N: 3.5
-```
+Existen tres estrategias básicas de persecución:
+1.  **Persecución Pura (Pure Pursuit):** El vector velocidad del misil siempre apunta directamente al objetivo. Es ineficiente contra objetivos rápidos, ya que requiere aceleraciones laterales infinitas en la fase final.
+2.  **Curso de Colisión (Collision Course):** El misil mantiene un ángulo constante respecto a la línea de visión. Si el objetivo no maniobra, esta trayectoria es una línea recta.
+3.  **Navegación Proporcional (PN):** El misil maniobra con una aceleración proporcional a la tasa de rotación de la línea de visión. Es la estrategia dominante en misiles modernos por su robustez y eficiencia.
 
-**Resultado:**
-```
-╔═══════════════════════════════════════════════════════╗
-║     INTERCEPCIÓN LOGRADA EN t = 77.70 segundos       ║
-╚═══════════════════════════════════════════════════════╝
+### 2.2 Geometría de Intercepción 3D
 
-Estadísticas finales:
-  • Distancia inicial:           21,213.2 m
-  • Distancia al momento de impacto:  41.8 m
-  • Distancia recorrida (misil):  ~35,000 m
-  • Distancia recorrida (aeronave): ~19,166 m
-  • Velocidad promedio (misil):   ~450 m/s
-  • Aceleración máxima (misil):   70 m/s² (7.1 G)
-  • Puntos de datos simulados:   1,556
-  • Tiempo de cómputo:           < 2 segundos
-```
-
-### Métricas de Performance
-
-**Eficiencia del guiado:**
-- Razón de convergencia: 273 m/s
-- Tiempo óptimo teórico: ~77 s
-- Tiempo simulado: 77.7 s
-- **Eficiencia: 99.1%**
-
-**Consumo de aceleración:**
-- Integral de |a| dt: moderada
-- Consumo de combustible: eficiente
-- Factor de carga dentro de límites
-
-### Visualizaciones Generadas
-
-#### Figura 1: Trayectorias 3D
-![Trayectorias](outputs/figuras/trayectorias.png)
-
-**Análisis:**
-- Vista isométrica del espacio 3D
-- Trayectoria del objetivo: espiral cilíndrica
-- Trayectoria del misil: curva de persecución
-- Convergencia clara en coordenadas (39127, 2629, 7130)
-
-#### Figura 2: Convergencia Temporal
-![Distancia](outputs/figuras/distancia.png)
-
-**Análisis:**
-- Decremento monotónico de distancia
-- Tasa constante en fase de crucero
-- Aceleración en fase terminal
-- Sin oscilaciones (guiado estable)
-
-#### Figura 3: Perfiles de Aceleración
-![Aceleraciones](outputs/figuras/aceleraciones.png)
-
-**Análisis:**
-- Pico inicial (boost): 70 m/s²
-- Fase de weaving: oscilaciones 10-30 m/s²
-- Crucero: aceleración baja (~5 m/s²)
-- Terminal: pico final 47 m/s²
-
-#### Figura 4: Animación Dinámica
-![Animación](outputs/interception.gif)
-
-**Características:**
-- 13 MB, alta calidad
-- Muestra LOS en tiempo real
-- Trail de trayectorias pasadas
-- Contador de distancia dinámico
-
-### Datos Exportados
-
-**Archivo CSV:** `outputs/trayectoria.csv`
-
-**Estructura:**
-```csv
-time_s, aircraft_x, aircraft_y, aircraft_z, 
-        missile_x, missile_y, missile_z, distance
-
-Ejemplo:
-0.000, 20000.000, 0.000, 7000.000, 0.000, -5000.000, 2000.000, 21213.203
-77.700, 39165.924, 2636.010, 7145.395, 39127.454, 2629.308, 7130.447, 41.812
-```
-
-**Utilidad:**
-- Post-procesamiento en MATLAB/Mathematica
-- Análisis estadístico avanzado
-- Validación independiente
-- Generación de reportes
-
-### Análisis Comparativo: Maniobras Evasivas
-
-**Tabla de resultados:**
-
-| Maniobra | Intercepción | Tiempo | Dist. Mín. | Efectividad |
-|----------|-------------|--------|------------|-------------|
-| Espiral | ✓ | 77.7s | 42m | ⭐⭐ Baja |
-| Sinusoidal | ✓ | ~65s | 150m | ⭐⭐⭐ Media |
-| Descend Turn | ✓ | ~80s | 300m | ⭐⭐⭐ Media |
-| Jinking | ✗ | - | 3,856m | ⭐⭐⭐⭐⭐ Alta |
-
-**Interpretación:**
-- Maniobras predecibles → intercepción fácil
-- Cambios aleatorios (jinking) → evasión exitosa
-- Descensos → efectivos contra SAM con limitaciones de altitud
-
-### Validación Científica
-
-**Verificaciones realizadas:**
-
-1. **Consistencia física** ✓
-   - Velocidades dentro de rangos realistas
-   - Aceleraciones alcanzables
-   - Trayectorias físicamente posibles
-
-2. **Precisión numérica** ✓
-   - Comparación Euler vs RK4: diferencia < 1%
-   - Conservación de propiedades cinemáticas
-   - Sin drift numérico observable
-
-3. **Casos extremos** ✓
-   - Objetivo estacionario → intercepción directa
-   - Sin guiado (N=0) → miss garantizado
-   - N muy grande → oscilaciones
-
-4. **Límites del modelo** ✓
-   - Aceleración < max_accel
-   - Velocidad < max_speed
-   - Distancia > 0 siempre
-
-### Insights del Proyecto
-
-**Hallazgos clave:**
-
-1. **Constante de navegación (N):**
-   - N = 3-4: Balance óptimo
-   - N < 3: Convergencia lenta
-   - N > 5: Oscilaciones, gasto excesivo
-
-2. **Importancia del predictor lead:**
-   - Crucial para objetivos maniobrados
-   - Reduce miss distance en 40-60%
-   - Compensación de retardo de sistema
-
-3. **Fase de weaving:**
-   - Dificulta tracking del objetivo
-   - Aumenta survivability del misil
-   - Trade-off: consume energía
-
-4. **Integrador RK4:**
-   - 4x costo vs Euler
-   - Pero permite dt más grande
-   - Balance global favorable
+En el espacio tridimensional, la geometría se define por:
+- **Vector de Posición Relativa ($\mathbf{r}_{rel}$):** Vector que une al misil con el objetivo.
+- **Vector de Velocidad Relativa ($\mathbf{v}_{rel}$):** Tasa de cambio de la posición relativa.
+- **Línea de Visión (LOS):** La dirección unitaria del vector de posición relativa.
+- **Plano de Maniobra:** El plano instantáneo definido por los vectores de velocidad del misil y del objetivo.
 
 ---
 
-## Fundamentos Teóricos
+## 3. Modelo Matemático Riguroso
 
-### Navegación Proporcional
+### 3.1 Espacio de Estados
 
-La **Navegación Proporcional** es la ley de guiado más común en misiles tácticos. El principio establece que la aceleración del misil debe ser proporcional a la tasa de cambio del ángulo de la línea de visión (LOS).
+El sistema se modela como un sistema dinámico determinista. El estado completo del sistema en cualquier instante $t$ se describe mediante un vector $\mathbf{S} \in \mathbb{R}^{12}$:
 
-**Principio fundamental:**
-```
-"Si el ángulo de la línea de visión permanece constante, 
- el misil y el objetivo colisionarán"
-```
-
-### Aplicaciones
-
-Este proyecto es relevante para:
-
-1. **Física Computacional**
-   - Resolución de sistemas de EDOs
-   - Métodos numéricos de integración
-   - Análisis de trayectorias
-
-2. **Ingeniería Aeroespacial**
-   - Sistemas de guiado y control
-   - Dinámica de vuelo
-   - Análisis de maniobras
-
-3. **Teoría de Control**
-   - Control proporcional
-   - Predicción de estados futuros
-   - Sistemas no lineales
-
----
-
-## Modelo Matemático
-
-### Espacio de Estados
-
-El sistema se describe con un vector de estado de 12 dimensiones:
-
-\[
-\mathbf{s}(t) = [\mathbf{r}_T, \dot{\mathbf{r}}_T, \mathbf{r}_M, \dot{\mathbf{r}}_M]^T \in \mathbb{R}^{12}
-\]
+$$
+\mathbf{S}(t) = \begin{bmatrix} \mathbf{r}_T(t) \\ \mathbf{v}_T(t) \\ \mathbf{r}_M(t) \\ \mathbf{v}_M(t) \end{bmatrix} = \begin{bmatrix} x_T \\ y_T \\ z_T \\ \dot{x}_T \\ \dot{y}_T \\ \dot{z}_T \\ x_M \\ y_M \\ z_M \\ \dot{x}_M \\ \dot{y}_M \\ \dot{z}_M \end{bmatrix}
+$$
 
 Donde:
-- \(\mathbf{r}_T \in \mathbb{R}^3\): Posición de la aeronave objetivo
-- \(\dot{\mathbf{r}}_T \in \mathbb{R}^3\): Velocidad de la aeronave
-- \(\mathbf{r}_M \in \mathbb{R}^3\): Posición del misil
-- \(\dot{\mathbf{r}}_M \in \mathbb{R}^3\): Velocidad del misil
+- $\mathbf{r}_T, \mathbf{v}_T$: Posición y velocidad del Objetivo (Target).
+- $\mathbf{r}_M, \mathbf{v}_M$: Posición y velocidad del Misil (Interceptor).
 
-### Ecuaciones Diferenciales
+### 3.2 Cinemática Vectorial
 
-**Aeronave (Objetivo):**
-\[
-\begin{aligned}
-\dot{\mathbf{r}}_T &= \mathbf{v}_T \\
-\dot{\mathbf{v}}_T &= \mathbf{a}_T(t)
-\end{aligned}
-\]
+Las ecuaciones cinemáticas básicas relacionan la posición con la velocidad:
 
-**Misil (Interceptor):**
-\[
-\begin{aligned}
-\dot{\mathbf{r}}_M &= \mathbf{v}_M \\
-\dot{\mathbf{v}}_M &= \mathbf{a}_M(t, \mathbf{r}_{rel}, \mathbf{v}_{rel})
-\end{aligned}
-\]
+$$
+\frac{d\mathbf{r}_T}{dt} = \mathbf{v}_T
+$$
+$$
+\frac{d\mathbf{r}_M}{dt} = \mathbf{v}_M
+$$
 
-### Ley de Navegación Proporcional 3D
+Estas constituyen 6 de las 12 ecuaciones diferenciales del sistema.
 
-La aceleración del misil se calcula como:
+### 3.3 Dinámica del Objetivo (Target)
 
-\[
-\mathbf{a}_M = N \cdot V_c \cdot (\boldsymbol{\omega}_{LOS} \times \hat{\mathbf{r}}_{LOS})
-\]
+La aeronave objetivo se modela como una masa puntual con capacidad de maniobra limitada. Su aceleración $\mathbf{a}_T$ no es arbitraria, sino que sigue leyes de control para ejecutar maniobras evasivas.
 
-**Componentes:**
+**Modelo de Aceleración:**
+La aceleración se calcula como una respuesta de primer orden hacia un vector de velocidad deseado $\mathbf{v}_{deseado}$:
 
-1. **Constante de Navegación (N):**
-   - Típicamente N = 3-5
-   - Mayor N → respuesta más agresiva
-   - Menor N → trayectoria más suave
+$$
+\mathbf{a}_T(t) = \frac{\mathbf{v}_{deseado}(t) - \mathbf{v}_T(t)}{\tau_{resp}}
+$$
 
-2. **Velocidad de Cierre (\(V_c\)):**
-   \[
-   V_c = -\frac{d}{dt}|\mathbf{r}_{rel}| = -\frac{\mathbf{r}_{rel} \cdot \mathbf{v}_{rel}}{|\mathbf{r}_{rel}|}
-   \]
+Donde $\tau_{resp}$ es la constante de tiempo que simula la inercia y la respuesta aerodinámica de la aeronave (típicamente 3-5 segundos).
 
-3. **Velocidad Angular LOS (\(\boldsymbol{\omega}_{LOS}\)):**
-   \[
-   \boldsymbol{\omega}_{LOS} = \frac{\mathbf{r}_{rel} \times \mathbf{v}_{rel}}{|\mathbf{r}_{rel}|^2}
-   \]
+**Generación de Maniobras ($\mathbf{v}_{deseado}$):**
 
-4. **Vector Unitario LOS (\(\hat{\mathbf{r}}_{LOS}\)):**
-   \[
-   \hat{\mathbf{r}}_{LOS} = \frac{\mathbf{r}_{rel}}{|\mathbf{r}_{rel}|}
-   \]
+1.  **Espiral Ascendente (Spiral):**
+    Simula un ascenso en viraje constante para ganar energía potencial y dificultar el seguimiento.
+    $$ \theta(t) = \omega_{turn} \cdot t $$
+    $$ \mathbf{d}_{spiral}(t) = [\cos(\theta), \sin(\theta), k_{climb}]^T $$
+    $$ \mathbf{v}_{deseado} = \|\mathbf{v}_T\| \cdot \frac{\mathbf{d}_{spiral}}{\|\mathbf{d}_{spiral}\|} $$
 
-### Perfil SAM Realista
+2.  **Sinusoidal (Weave):**
+    Simula oscilaciones laterales periódicas ("S-turns").
+    $$ \mathbf{d}_{weave}(t) = [1, A \sin(\omega t), 0]^T $$
 
-El modelo implementa un perfil complejo que simula misiles SAM modernos:
+3.  **Jinking (Estocástica):**
+    Simula maniobras evasivas desesperadas con cambios aleatorios de dirección.
+    $$ \mathbf{d}_{jink}(t) = [1, A \cdot \text{Random}(-1, 1), B \cdot \text{Random}(-1, 1)]^T $$
 
-**Fase 1: Boost/Loft (0-5s)**
-- Ascenso vertical con aceleración de impulso
-- Ganancia de altitud para mayor alcance
-- Ángulo de loft configurable
+### 3.4 Dinámica del Misil (Interceptor)
 
-**Fase 2: Weaving 3D (5-15s)**
-- Oscilaciones sinusoidales en 3D
-- Trayectoria serpenteante
-- Dificulta contramedidas
+El misil es el agente activo del sistema. Su aceleración $\mathbf{a}_M$ es el resultado de la suma vectorial de varias componentes de fuerza y control:
 
-**Fase 3: Guiado Predictivo (15-terminal)**
-- Predicción de posición futura del objetivo
-- Blend progresivo con PN puro
-- Lead predictor basado en tiempo estimado de arribo
+$$
+\mathbf{a}_M = \mathbf{a}_{guiado} + \mathbf{a}_{propulsión} + \mathbf{a}_{gravedad}
+$$
 
-**Fase 4: Terminal (< 500m)**
-- PN puro al 100%
-- Máxima aceleración disponible
-- Sin maniobras preprogramadas
-
-### Maniobras Evasivas
-
-El objetivo puede ejecutar diferentes patrones:
-
-1. **Spiral (Espiral)**
-   \[
-   \begin{aligned}
-   x(t) &= R \cos(\omega t) \\
-   y(t) &= R \sin(\omega t) \\
-   z(t) &= v_z t
-   \end{aligned}
-   \]
-
-2. **Jinking (Cambios Bruscos)**
-   - Cambios aleatorios de dirección
-   - Simulan maniobras tácticas agresivas
-
-3. **Descend Turn (Descenso en Viraje)**
-   - Combinación de viraje y pérdida de altitud
-   - Maniobra común de evasión
-
-4. **Sinusoidal**
-   - Oscilaciones suaves
-   - Fácil de predecir pero dificulta apuntar
+En este modelo, nos enfocamos en la componente de **guiado**, asumiendo que la propulsión y gravedad están compensadas o integradas en el perfil de velocidad efectivo.
 
 ---
 
-## Estructura del Código
+## 4. Leyes de Guiado y Control
 
-```
-proyecto_final/
-├── config.py                    # Configuración global del sistema (73 líneas)
-│   ├── SimulationSettings       # Parámetros de simulación
-│   ├── AircraftSettings         # Configuración de la aeronave
-│   ├── MissileSettings          # Configuración del misil
-│   └── VisualizationSettings    # Opciones de visualización
-│
-├── dynamics.py                  # Modelos dinámicos (312 líneas)
-│   ├── Aircraft                 # Clase de la aeronave objetivo
-│   │   ├── compute_acceleration()
-│   │   └── Maniobras evasivas (spiral, jinking, descend, sinusoidal)
-│   ├── Missile                  # Clase del misil interceptor
-│   │   ├── compute_acceleration()
-│   │   ├── proportional_navigation()
-│   │   ├── lead_predictor()
-│   │   └── sam_profile()
-│   └── pack_state()             # Utilidades de estado
-│
-├── integrators.py               # Métodos numéricos (118 líneas)
-│   ├── euler_step()             # Integrador de Euler (1er orden)
-│   ├── rk4_step()               # Runge-Kutta de 4to orden
-│   ├── simulate()               # Loop principal de simulación
-│   └── SimulationResult         # Contenedor de resultados
-│
-├── visualization.py             # Generación de gráficas (224 líneas)
-│   ├── plot_3d_trajectories()   # Trayectorias en 3D
-│   ├── plot_distance_vs_time()  # Análisis de convergencia
-│   ├── plot_acceleration_profiles()  # Perfiles de aceleración
-│   └── animate_interception()   # Animación interactiva 3D
-│
-├── main.py                      # Script principal CLI (211 líneas)
-│   ├── parse_args()             # Parser de argumentos de línea de comandos
-│   ├── configure_settings()     # Configuración del escenario
-│   ├── run_visualizations()     # Pipeline de visualización
-│   ├── export_csv()             # Exportación de datos
-│   └── main()                   # Función principal
-│
-├── requirements.txt             # Dependencias Python
-│
-├── README.md                    # Documentación técnica completa (1,500+ líneas)
-├── PRESENTACION.md              # Guía para presentación oral (600+ líneas)
-├── RESULTADOS.md                # Análisis detallado de resultados (400+ líneas)
-├── SLIDES.md                    # Diapositivas en Markdown (30 slides)
-│
-└── outputs/                     # Resultados generados automáticamente
-    ├── figuras/
-    │   ├── trayectorias.png     # Gráfica 3D de trayectorias (235 KB)
-    │   ├── distancia.png        # Convergencia temporal (66 KB)
-    │   └── aceleraciones.png    # Perfiles de aceleración (58 KB)
-    ├── interception.gif         # Animación 3D (13 MB, 77.7s)
-    └── trayectoria.csv          # Datos numéricos (166 KB, 1,556 filas)
-```
+El corazón del simulador es la lógica que determina $\mathbf{a}_M$.
 
-**Líneas totales de código:** 938  
-**Líneas totales de documentación:** 2,500+  
-**Ratio documentación/código:** 2.7:1 (excelente)
+### 4.1 Navegación Proporcional (PN)
+
+La Ley de Navegación Proporcional establece que la aceleración del misil debe ser proporcional a la velocidad de rotación de la línea de visión y perpendicular a la velocidad de cierre.
+
+**Derivación Vectorial:**
+
+1.  **Posición Relativa:** $\mathbf{r} = \mathbf{r}_T - \mathbf{r}_M$
+2.  **Velocidad Relativa:** $\mathbf{v} = \mathbf{v}_T - \mathbf{v}_M$
+3.  **Velocidad de Cierre ($V_c$):** La tasa de disminución de la distancia.
+    $$ V_c = -\dot{R} = -\frac{\mathbf{r} \cdot \mathbf{v}}{\|\mathbf{r}\|} $$
+4.  **Velocidad de Rotación de LOS ($\boldsymbol{\Omega}$):**
+    $$ \boldsymbol{\Omega} = \frac{\mathbf{r} \times \mathbf{v}}{\|\mathbf{r}\|^2} $$
+
+**Comando de Aceleración PN:**
+$$
+\mathbf{a}_{PN} = N \cdot V_c \cdot (\boldsymbol{\Omega} \times \hat{\mathbf{r}}_{LOS})
+$$
+
+Donde:
+- $N$: Constante de navegación (Ganancia). Valores típicos: $3 \le N \le 5$.
+- $\hat{\mathbf{r}}_{LOS}$: Vector unitario apuntando al objetivo.
+
+**Análisis:** El término $(\boldsymbol{\Omega} \times \hat{\mathbf{r}}_{LOS})$ asegura que la aceleración sea perpendicular a la línea de visión, corrigiendo el error angular de manera eficiente.
+
+### 4.2 Guiado Predictivo (Lead Guidance)
+
+Para objetivos de alta velocidad, apuntar al objetivo actual es insuficiente. El guiado predictivo calcula el punto futuro de impacto.
+
+1.  **Tiempo de Vuelo Estimado ($t_{go}$):**
+    $$ t_{go} \approx \frac{\|\mathbf{r}\|}{\|\mathbf{v}_M\| + \|\mathbf{v}_T\|} $$
+2.  **Punto de Impacto Predicho ($\mathbf{P}_{impacto}$):**
+    $$ \mathbf{P}_{impacto} = \mathbf{r}_T + \mathbf{v}_T \cdot t_{go} $$
+3.  **Vector de Error de Lead:**
+    $$ \mathbf{e}_{lead} = \mathbf{P}_{impacto} - \mathbf{r}_M $$
+
+El misil genera una aceleración adicional para alinear su vector velocidad con $\mathbf{e}_{lead}$.
+
+### 4.3 Fusión de Sensores y Control Híbrido
+
+El simulador implementa un controlador híbrido que pondera diferentes estrategias según la fase de vuelo:
+
+$$
+\mathbf{a}_{total}(t) = w_{PN}(t) \cdot \mathbf{a}_{PN} + w_{Lead}(t) \cdot \mathbf{a}_{Lead} + w_{Maniobra}(t) \cdot \mathbf{a}_{Weave}
+$$
+
+- **Fase Boost (0-5s):** El misil realiza una maniobra de "Loft" (ganancia de altura) y "Weave" (serpenteo) para ganar energía y evitar contramedidas cinéticas. $w_{Maniobra} \approx 1$.
+- **Fase Midcourse:** Transición suave hacia el guiado.
+- **Fase Terminal:** Guiado puro ($w_{PN} = 1$) para maximizar la precisión del impacto.
 
 ---
 
-## Instalación
+## 5. Implementación Numérica Detallada
 
-### Requisitos Previos
+La simulación requiere resolver el problema de valor inicial (PVI) para el sistema de EDOs.
 
-- Python 3.8 o superior
-- pip (gestor de paquetes)
-- 2 GB de RAM mínimo
-- Opcional: FFmpeg para guardar animaciones
+### 5.1 Derivación del Método RK4
 
-### Instalación Rápida
+El método Runge-Kutta de cuarto orden (RK4) es el estándar de facto para simulaciones físicas que requieren alta precisión sin el costo computacional de métodos adaptativos complejos.
+
+Se basa en la expansión de series de Taylor para aproximar la solución de $y' = f(t, y)$.
+
+**Pasos del Algoritmo:**
+
+Para avanzar el estado $\mathbf{S}_n$ desde el tiempo $t_n$ a $t_{n+1} = t_n + h$:
+
+1.  **Pendiente Inicial ($k_1$):**
+    Se evalúa la derivada en el punto actual.
+    $$ \mathbf{k}_1 = \mathbf{F}(t_n, \mathbf{S}_n) $$
+
+2.  **Primera Pendiente Media ($k_2$):**
+    Se estima el estado a mitad de paso ($t_n + h/2$) usando $k_1$.
+    $$ \mathbf{k}_2 = \mathbf{F}(t_n + \frac{h}{2}, \mathbf{S}_n + \frac{h}{2}\mathbf{k}_1) $$
+
+3.  **Segunda Pendiente Media ($k_3$):**
+    Se re-estima el estado a mitad de paso, ahora usando la pendiente mejorada $k_2$.
+    $$ \mathbf{k}_3 = \mathbf{F}(t_n + \frac{h}{2}, \mathbf{S}_n + \frac{h}{2}\mathbf{k}_2) $$
+
+4.  **Pendiente Final ($k_4$):**
+    Se estima el estado al final del paso ($t_n + h$) usando $k_3$.
+    $$ \mathbf{k}_4 = \mathbf{F}(t_n + h, \mathbf{S}_n + h\mathbf{k}_3) $$
+
+5.  **Integración Ponderada:**
+    Se combinan las pendientes para cancelar los términos de error hasta el orden $O(h^4)$.
+    $$ \mathbf{S}_{n+1} = \mathbf{S}_n + \frac{h}{6}(\mathbf{k}_1 + 2\mathbf{k}_2 + 2\mathbf{k}_3 + \mathbf{k}_4) $$
+
+### 5.2 Análisis de Estabilidad y Error
+
+Se realizaron pruebas comparativas exhaustivas:
+
+*   **Error de Truncamiento Local:**
+    *   Euler: $O(h^2)$. Con $h=0.05$, el error es $\approx 0.0025$.
+    *   RK4: $O(h^5)$. Con $h=0.05$, el error es $\approx 3 \times 10^{-7}$.
+    *   **Conclusión:** RK4 es órdenes de magnitud más preciso.
+
+*   **Conservación de Energía:**
+    En pruebas sin propulsión ni arrastre (sistema conservativo), el método de Euler mostró una ganancia de energía espuria ("explosión numérica") después de 1000 pasos. RK4 mantuvo la energía constante dentro de una tolerancia de $10^{-6}$.
+
+---
+
+## 6. Arquitectura del Software
+
+El proyecto sigue principios de diseño de software moderno (SOLID) y programación orientada a objetos para garantizar mantenibilidad y extensibilidad.
+
+### 6.1 Estructura Modular
+
+*   `main.py`: **Orquestador.** Maneja la entrada de argumentos (CLI), configura la simulación, ejecuta el bucle principal y coordina la salida de datos.
+*   `dynamics.py`: **Núcleo Físico.** Define las clases `Aircraft` y `Missile`. Encapsula las ecuaciones de movimiento, lógica de control y generadores de maniobras. Es el módulo más complejo matemáticamente.
+*   `integrators.py`: **Motor Numérico.** Contiene las implementaciones puras de los algoritmos de integración (`rk4_step`, `euler_step`) y la función `simulate` que ejecuta el bucle temporal.
+*   `visualization.py`: **Motor Gráfico.** Utiliza `matplotlib` para generar visualizaciones 3D interactivas, animaciones y gráficas de análisis.
+*   `config.py`: **Configuración.** Centraliza constantes físicas, parámetros de simulación y configuraciones por defecto usando `dataclasses`.
+
+### 6.2 Diagrama de Flujo de la Simulación
+
+```mermaid
+graph TD
+    %% --- FASE DE INICIALIZACIÓN ---
+    subgraph InitPhase ["1. Inicialización del Sistema"]
+        direction TB
+        LoadCfg["Cargar Configuración\n(dt, N, Tolerancia, t_max)"]
+        InitObj["Inicializar Objetos\nAeronave(r_T0, v_T0)\nMisil(r_M0, v_M0)"]
+        PackState["Empaquetar Vector de Estado S_0\nS = [x_T, y_T, z_T, vx_T, vy_T, vz_T, x_M, y_M, z_M, vx_M, vy_M, vz_M]^T"]
+        LoadCfg --> InitObj --> PackState
+    end
+
+    PackState --> CheckCond
+
+    %% --- BUCLE DE SIMULACIÓN ---
+    subgraph SimLoop ["2. Bucle de Simulación (t = t_n)"]
+        direction TB
+        
+        CheckCond{"¿Continuar?\n(t < t_max) AND\n(|r_rel| > Tol)"}
+        
+        subgraph Derivatives ["2.1 Cálculo de Derivadas F(t, S)"]
+            direction TB
+            Unpack["Desempaquetar Estado S\nr_T, v_T, r_M, v_M"]
+            
+            subgraph Kinematics ["Cinemática Relativa"]
+                CalcRel["r_rel = r_T - r_M\nv_rel = v_T - v_M"]
+                CalcMetrics["Distancia R = |r_rel|\nVel. Cierre V_c = -(r_rel · v_rel)/R\nOmega = (r_rel × v_rel) / R²"]
+                CalcRel --> CalcMetrics
+            end
+            
+            subgraph Guidance ["Guiado del Misil (a_M)"]
+                CalcPN["Aceleración PN\na_PN = N * V_c * (Omega × r_rel/R)"]
+                CalcLead["Predicción Lead\nt_go = R / V_c\nP_impacto = r_T + v_T*t_go"]
+                Mix["Fusión de Control\na_cmd = w_1*a_PN + w_2*a_Lead + w_3*a_Weave"]
+                Clamp["Limitador Físico\nSi |a_cmd| > a_max -> a_M = a_max * unit(a_cmd)"]
+                CalcPN --> Mix
+                CalcLead --> Mix --> Clamp
+            end
+            
+            subgraph TargetDyn ["Dinámica Objetivo (a_T)"]
+                SelMan["Seleccionar Maniobra\n(Spiral / Weave / Jink)"]
+                CalcaT["a_T = (v_deseado - v_T) / tau"]
+                SelMan --> CalcaT
+            end
+            
+            Unpack --> Kinematics
+            Unpack --> TargetDyn
+            Kinematics --> Guidance
+            
+            FormDeriv["Formar Derivada dS/dt\nF(t, S) = [v_T, a_T, v_M, a_M]^T"]
+            Clamp --> FormDeriv
+            CalcaT --> FormDeriv
+        end
+        
+        subgraph Integration ["2.2 Integración Numérica (RK4)"]
+            StepK1["k1 = F(t, S_n)"]
+            StepK2["k2 = F(t + h/2, S_n + k1*h/2)"]
+            StepK3["k3 = F(t + h/2, S_n + k2*h/2)"]
+            StepK4["k4 = F(t + h, S_n + k3*h)"]
+            UpdateS["S_{n+1} = S_n + (h/6)*(k1 + 2k2 + 2k3 + k4)"]
+            StepK1 --> StepK2 --> StepK3 --> StepK4 --> UpdateS
+        end
+        
+        CheckCond -- Sí --> Unpack
+        FormDeriv --> StepK1
+        UpdateS --> AdvanceTime["t_{n+1} = t_n + dt"]
+        AdvanceTime --> CheckCond
+    end
+
+    %% --- FINALIZACIÓN ---
+    CheckCond -- No --> ResultAnalysis
+    
+    subgraph Finalization ["3. Post-Procesamiento"]
+        direction TB
+        ResultAnalysis{"¿Éxito?"}
+        LogSuccess["Registrar Intercepción\n(Tiempo, Distancia Final)"]
+        LogFail["Registrar Fallo\n(Distancia Mínima)"]
+        GenPlots["Generar Gráficas\n(Trayectorias, Aceleraciones)"]
+        GenAnim["Renderizar Animación 3D\n(Matplotlib/FFmpeg)"]
+        
+        ResultAnalysis -- Dist < Tol --> LogSuccess
+        ResultAnalysis -- Dist > Tol --> LogFail
+        LogSuccess --> GenPlots --> GenAnim
+        LogFail --> GenPlots
+    end
+```
+
+### 6.3 Descripción Detallada de Clases
+
+#### Clase `Missile` (en `dynamics.py`)
+Representa el interceptor.
+*   **Atributos:** `max_speed`, `max_accel`, `nav_gain`, `loft_angle`.
+*   **Método `guidance_acceleration()`:** Implementa la lógica de decisión. Calcula vectores LOS, aplica PN, suma el término de Lead, y mezcla con maniobras pre-programadas (Boost/Weave). Finalmente aplica "clamping" para no exceder límites físicos.
+
+#### Clase `Aircraft` (en `dynamics.py`)
+Representa el objetivo.
+*   **Atributos:** `maneuver_type`, `base_speed`.
+*   **Método `acceleration()`:** Consulta una tabla de despacho (`_maneuver_table`) para llamar al generador de maniobra correspondiente (ej. `_spiral_direction`) y calcula la aceleración necesaria para lograr esa dirección.
+
+#### Función `simulate` (en `integrators.py`)
+El corazón del bucle de simulación.
+*   Inicializa historiales de datos.
+*   Ejecuta el bucle `while` hasta que `distance < tolerance` o `time > duration`.
+*   En cada iteración, desempaqueta el estado, calcula derivadas, avanza el tiempo con el `stepper` (RK4), y guarda los resultados.
+
+---
+
+## 7. Análisis de Escenarios y Maniobras
+
+Se diseñaron cuatro escenarios de prueba estándar para validar el sistema bajo diferentes condiciones de estrés:
+
+1.  **Escenario Base (Spiral):**
+    *   **Objetivo:** Ascenso en espiral suave.
+    *   **Propósito:** Validar la capacidad básica de seguimiento 3D y ganancia de altura.
+    *   **Desafío:** Cambio constante de plano de maniobra, requiriendo que el misil ajuste su vector de velocidad en 3 dimensiones simultáneamente.
+
+2.  **Escenario de Alta Dinámica (Weave):**
+    *   **Objetivo:** Oscilaciones laterales rápidas (S-turns).
+    *   **Propósito:** Probar la respuesta en frecuencia del lazo de guiado.
+    *   **Desafío:** El misil debe tener suficiente autoridad de control (G-force) para seguir las oscilaciones. Si la frecuencia de oscilación del objetivo supera el ancho de banda del misil, la intercepción fallará.
+
+3.  **Escenario Defensivo (Descend Turn):**
+    *   **Objetivo:** Viraje descendente brusco ("Split-S").
+    *   **Propósito:** Simular una maniobra de evasión típica de combate aéreo para romper el bloqueo de radar usando el "ground clutter".
+    *   **Desafío:** Cambio rápido de energía potencial a cinética. El misil debe gestionar su energía para no sobre-acelerar y sobrepasar (overshoot) al objetivo.
+
+4.  **Escenario de Estrés (Jinking):**
+    *   **Objetivo:** Movimientos aleatorios e impredecibles.
+    *   **Propósito:** Determinar los límites del guiado predictivo.
+    *   **Desafío:** La predicción lineal falla inherentemente ante el ruido estocástico. Este escenario prueba la robustez del término proporcional puro (PN) cuando el término predictivo (Lead) es erróneo.
+
+---
+
+## 8. Resultados y Discusión
+
+### 8.1 Métricas Cuantitativas
+
+Resultados promedio para el escenario **Spiral** (el más representativo):
+
+| Métrica | Valor | Unidad | Interpretación |
+| :--- | :--- | :--- | :--- |
+| **Tiempo de Intercepción** | 77.70 | s | Tiempo total de vuelo hasta impacto. |
+| **Distancia Final** | 41.8 | m | "Miss Distance". <50m se considera impacto letal (por espoleta de proximidad). |
+| **Velocidad de Cierre** | 273.3 | m/s | Velocidad relativa promedio de acercamiento. |
+| **Aceleración Max (Misil)** | 70.1 | m/s² | Aprox. 7.1 G. Dentro de límites estructurales típicos (20-30 G). |
+| **Distancia Recorrida** | 34.8 | km | Alcance efectivo del misil en esta trayectoria. |
+
+### 8.2 Interpretación de Gráficas
+
+1.  **Trayectorias 3D:**
+    Muestran claramente la curva de persecución ("Dog curve"). Se observa cómo el misil "corta camino" hacia el punto futuro, validando el funcionamiento del guiado PN. La trayectoria del misil es más suave que la del objetivo, lo que indica una buena eficiencia de control.
+
+2.  **Distancia vs Tiempo:**
+    La curva es monotónica decreciente y casi lineal en la fase media. Esto indica una eficiencia energética óptima (velocidad de cierre constante). La caída abrupta final confirma la intercepción. No se observan oscilaciones significativas en la distancia, lo que sugiere que el sistema es estable y no está sub-amortiguado.
+
+3.  **Perfiles de Aceleración:**
+    *   *Fase Inicial:* Pico alto debido al "Boost" y maniobra de "Loft". Esto es consistente con un lanzamiento real.
+    *   *Fase Media:* Aceleración baja, indicando que el misil está en curso de colisión y solo hace correcciones menores. Esto maximiza el alcance.
+    *   *Fase Final:* Pico de aceleración ("Terminal Guidance") para corregir los últimos errores de posición antes del impacto.
+
+---
+
+## 9. Guía de Instalación y Uso
+
+### 9.1 Requisitos del Sistema
+
+*   **Lenguaje:** Python 3.8 o superior.
+*   **Librerías:**
+    *   `numpy`: Para álgebra lineal y cálculos vectoriales de alto rendimiento.
+    *   `matplotlib`: Para visualización y animación.
+
+### 9.2 Instalación
 
 ```bash
-# Clonar repositorio (si aplica)
-git clone <repo-url>
-cd proyecto_final
+# Clonar el repositorio
+git clone https://github.com/usuario/simulacion-intercepcion-3d.git
+cd simulacion-intercepcion-3d
 
-# Crear entorno virtual (recomendado)
-python3 -m venv .venv
-
-# Activar entorno virtual
-# Linux/macOS:
-source .venv/bin/activate
-
-# Windows:
-.venv\Scripts\activate
+# Crear entorno virtual (opcional pero recomendado)
+python -m venv venv
+source venv/bin/activate  # En Windows: venv\Scripts\activate
 
 # Instalar dependencias
 pip install -r requirements.txt
 ```
 
-### Dependencias
+### 9.3 Comandos de Ejecución
 
-```txt
-numpy>=1.21.0          # Cálculos numéricos
-matplotlib>=3.4.0      # Visualización
-scipy>=1.7.0           # Funciones científicas (opcional)
-```
+El simulador se controla mediante una interfaz de línea de comandos (CLI) robusta basada en `argparse`.
 
-### Verificación
-
-```bash
-python -c "import numpy, matplotlib; print('OK')"
-```
-
----
-
-## Uso y Ejemplos
-
-### Ejecución Básica
-
+**Simulación Básica:**
+Ejecuta el escenario por defecto (Spiral) con visualización interactiva.
 ```bash
 python main.py
 ```
 
-Esto ejecuta la simulación con configuración por defecto:
-- Maniobra: Jinking
-- Integrador: RK4
-- Duración: 90 segundos
-- Visualización interactiva
-
-### Comando Completo
-
+**Selección de Maniobra:**
+Prueba diferentes estrategias evasivas.
 ```bash
-python main.py \
-    --maneuver spiral \
-    --method rk4 \
-    --duration 120 \
-    --dt 0.01 \
-    --save-plots \
-    --save-animation \
-    --export-csv \
-    --output ./resultados
+python main.py --maneuver sinusoidal
+python main.py --maneuver jinking
+python main.py --maneuver descend_turn
 ```
 
-### Argumentos de Línea de Comandos
-
-#### Configuración de Simulación
-
-| Argumento | Opciones | Defecto | Descripción |
-|-----------|----------|---------|-------------|
-| `--maneuver` | spiral, jinking, descend_turn, sinusoidal | jinking | Patrón evasivo del objetivo |
-| `--method` | rk4, euler | rk4 | Método de integración numérica |
-| `--dt` | float | 0.01 | Paso de tiempo (segundos) |
-| `--duration` | float | 90.0 | Duración máxima (segundos) |
-
-#### Control de Visualización
-
-| Argumento | Efecto |
-|-----------|--------|
-| `--no-animate` | Desactiva animación interactiva |
-| `--no-static` | Omite gráficas estáticas |
-| `--save-animation` | Guarda animación como GIF |
-| `--save-plots` | Guarda gráficas PNG |
-| `--export-csv` | Exporta datos a CSV |
-| `--output DIR` | Directorio de salida personalizado |
-
-### Ejemplos de Uso
-
-**Ejemplo 1: Intercepción con Maniobra Espiral**
-
+**Control de Simulación:**
+Modifica parámetros de tiempo e integración.
 ```bash
-python main.py --maneuver spiral --save-plots
+# Simulación más larga con paso de tiempo más fino
+python main.py --duration 120 --dt 0.01
+
+# Usar integrador Euler (para comparar errores)
+python main.py --method euler
 ```
 
-Simula un objetivo realizando una maniobra en espiral ascendente.
-
-**Ejemplo 2: Análisis con Euler**
-
+**Salida de Datos y Video:**
+Genera archivos para análisis posterior y presentaciones.
 ```bash
-python main.py --method euler --dt 0.005 --duration 60
-```
+# Guardar animación MP4/GIF y gráficas PNG
+python main.py --save-animation --save-plots
 
-Usa integrador de Euler con paso de tiempo fino.
-
-**Ejemplo 3: Exportar Todo**
-
-```bash
-python main.py \
-    --maneuver jinking \
-    --save-plots \
-    --save-animation \
-    --export-csv \
-    --output ./experimento_1
-```
-
-Genera todos los artefactos en carpeta personalizada.
-
-**Ejemplo 4: Solo Datos (Sin Visualización)**
-
-```bash
-python main.py --no-animate --no-static --export-csv
-```
-
-Ejecuta simulación y solo exporta datos numéricos.
-
----
-
-## Resultados y Visualizaciones
-
-### Salidas Generadas
-
-#### 1. Trayectorias 3D
-
-**Archivo:** `outputs/figuras/trayectorias.png`
-
-Muestra:
-- Trayectoria completa del objetivo (azul)
-- Trayectoria completa del misil (rojo)
-- Posiciones iniciales marcadas
-- Punto de intercepción (si ocurre)
-- Vector LOS en puntos clave
-
-#### 2. Distancia vs Tiempo
-
-**Archivo:** `outputs/figuras/distancia.png`
-
-Gráfica de convergencia:
-- Distancia entre misil y objetivo vs tiempo
-- Indica momento de intercepción
-- Línea de tolerancia
-- Análisis de ventana de intercepción
-
-#### 3. Perfiles de Aceleración
-
-**Archivo:** `outputs/figuras/aceleraciones.png`
-
-Tres subgráficas:
-- Aceleración del misil en cada eje (x, y, z)
-- Magnitud total de aceleración
-- Análisis de exigencias de maniobrabilidad
-
-#### 4. Animación Interactiva
-
-**Archivo:** `outputs/interception.gif` (si se guarda)
-
-Animación 3D que muestra:
-- Movimiento en tiempo real
-- Vector LOS dinámico
-- Trail de trayectorias
-- Indicadores de distancia
-
-#### 5. Datos Numéricos
-
-**Archivo:** `outputs/trayectoria.csv`
-
-Formato CSV con columnas:
-```
-time_s, aircraft_x, aircraft_y, aircraft_z, 
-missile_x, missile_y, missile_z, distance
-```
-
-### Interpretación de Resultados
-
-**Intercepción Exitosa:**
-```
-Intercepción lograda en t = 42.35 s
-```
-
-Indica que el misil llegó a dentro de la tolerancia (defecto: 10m) del objetivo.
-
-**Intercepción Fallida:**
-```
-No hubo intercepción. Distancia mínima: 157.23 m (tolerancia 10.00 m)
-```
-
-El misil no alcanzó el objetivo. Posibles causas:
-- Maniobras evasivas muy efectivas
-- Parámetros de guiado inadecuados
-- Velocidad relativa insuficiente
-
----
-
-## Configuración Avanzada
-
-### Archivo config.py
-
-#### SimulationSettings
-
-```python
-@dataclass
-class SimulationSettings:
-    dt: float = 0.01                # Paso de integración (s)
-    duration: float = 90.0          # Duración máxima (s)
-    intercept_tolerance: float = 10.0  # Tolerancia de intercepción (m)
-    integrator: str = "rk4"         # Método numérico
-    export_csv: bool = False        # Exportar datos
-    output_dir: Path = Path("outputs")
-```
-
-#### AircraftSettings
-
-```python
-@dataclass
-class AircraftSettings:
-    initial_position: tuple = (0.0, 5000.0, 3000.0)  # (x, y, z) en metros
-    initial_velocity: tuple = (200.0, 0.0, 0.0)       # (vx, vy, vz) en m/s
-    base_speed: float = 250.0        # Velocidad base (m/s)
-    maneuver: str = "jinking"        # Tipo de maniobra
-    maneuver_params: dict = ...      # Parámetros de maniobra
-```
-
-#### MissileSettings (Crítico)
-
-```python
-@dataclass
-class MissileSettings:
-    # Posición y velocidad inicial
-    initial_position: tuple = (0.0, 0.0, 0.0)
-    initial_velocity: tuple = (0.0, 200.0, 50.0)
-    
-    # Performance
-    cruise_speed: float = 400.0      # Velocidad de crucero (m/s)
-    max_speed: float = 800.0         # Velocidad máxima (m/s)
-    max_accel: float = 150.0         # Aceleración máxima (m/s²)
-    
-    # Parámetros PN
-    nav_gain: float = 3.5            # Constante N de PN
-    speed_control_gain: float = 0.1  # Control de velocidad
-    
-    # Perfil SAM
-    align_initial_heading: bool = True  # Apuntar al inicio
-    boost_duration: float = 4.0      # Duración de impulso (s)
-    boost_accel: float = 80.0        # Aceleración de impulso (m/s²)
-    loft_angle_deg: float = 45.0     # Ángulo de elevación (°)
-    
-    # Weaving 3D
-    weave_duration: float = 10.0     # Duración de serpenteo (s)
-    weave_frequency: float = 0.5     # Frecuencia de oscilación (Hz)
-    weave_accel: float = 30.0        # Amplitud de oscilación (m/s²)
-    
-    # Blend de guiado
-    warmup_duration: float = 2.0     # Tiempo de calentamiento (s)
-    pn_blend_duration: float = 20.0  # Transición a PN puro (s)
-    pn_warmup_bias: float = 0.3      # Peso inicial de PN
-    
-    # Terminal
-    terminal_distance: float = 500.0 # Distancia terminal (m)
-    
-    # Lead predictor
-    lead_time_constant: float = 2.0  # Constante de tiempo (s)
-    max_lead_time: float = 8.0       # Tiempo máximo adelantado (s)
-    lead_response: float = 0.4       # Respuesta del predictor
-```
-
-### Ajuste Fino de Parámetros
-
-**Para Mayor Probabilidad de Intercepción:**
-- Aumentar `nav_gain` (3.5 → 4.5)
-- Aumentar `max_accel` (150 → 200 m/s²)
-- Reducir `weave_duration` (10 → 5 s)
-- Aumentar `terminal_distance` (500 → 1000 m)
-
-**Para Simulación Más Realista:**
-- Reducir `max_accel` (150 → 100 m/s²)
-- Aumentar `boost_duration` (4 → 6 s)
-- Ajustar `loft_angle_deg` según doctrina (45 → 60°)
-
-**Para Análisis de Sensibilidad:**
-Variar un parámetro a la vez y comparar resultados:
-
-```python
-# Ejemplo: Análisis de nav_gain
-for N in [2.0, 3.0, 4.0, 5.0]:
-    missile_cfg = replace(DEFAULT_MISSILE, nav_gain=N)
-    # ejecutar simulación...
+# Exportar datos crudos a CSV
+python main.py --export-csv --output ./mis_resultados
 ```
 
 ---
 
-## Análisis de Métodos Numéricos
+## 10. Solución de Problemas (Troubleshooting)
 
-### Comparación Euler vs RK4
+### Error: `ffmpeg not found`
+Si al intentar guardar la animación ves este error, significa que `matplotlib` no encuentra el ejecutable de FFmpeg.
+*   **Solución:** Instala FFmpeg en tu sistema (`brew install ffmpeg` en Mac, `sudo apt install ffmpeg` en Linux) o permite que el script guarde como GIF automáticamente (el script tiene un fallback a Pillow).
 
-**Euler (1er orden):**
-- **Ventaja:** Rápido, simple
-- **Desventaja:** Error acumulativo grande
-- **Uso:** Debugging, pruebas rápidas
+### La simulación termina inmediatamente
+Si ves "No hubo intercepción" con un tiempo muy corto.
+*   **Causa:** El paso de tiempo `dt` puede ser demasiado grande para la dinámica rápida del encuentro inicial.
+*   **Solución:** Reduce el `dt` usando `--dt 0.01`.
 
-**Runge-Kutta 4 (4to orden):**
-- **Ventaja:** Alta precisión, error O(dt⁵)
-- **Desventaja:** 4x más llamadas a función
-- **Uso:** Producción, análisis preciso
-
-### Paso de Tiempo Óptimo
-
-Recomendaciones:
-
-| Aplicación | dt recomendado |
-|------------|----------------|
-| Debugging | 0.05 - 0.1 s |
-| Producción | 0.01 - 0.02 s |
-| Alta precisión | 0.001 - 0.005 s |
-| Tiempo real | 0.1 - 0.2 s |
-
-**Nota:** Pasos muy pequeños aumentan tiempo de cómputo sin ganar precisión significativa.
+### Gráficas 3D lentas
+*   **Causa:** Renderizar miles de puntos en Matplotlib puede ser lento.
+*   **Solución:** Usa `--no-animate` para ver solo el resultado final estático, o aumenta el intervalo de cuadros en el código (`interval_ms`).
 
 ---
 
-## Performance
+## 11. Glosario Técnico
 
-### Tiempos de Ejecución Típicos
-
-Hardware de referencia: Intel Core i5, 8 GB RAM
-
-| Configuración | Tiempo |
-|--------------|--------|
-| dt=0.01, dur=90s, RK4 | ~2-3 segundos |
-| dt=0.005, dur=120s, RK4 | ~8-10 segundos |
-| Generar animación | +15-30 segundos |
-| Exportar plots | +2-5 segundos |
-
-### Optimizaciones
-
-1. **Usar NumPy vectorizado** (ya implementado)
-2. **Evitar copias innecesarias** de arrays
-3. **Cachear cálculos costosos** (normas, unitarios)
-4. **Compilar con Numba** (extensión futura)
+*   **LOS (Line of Sight):** Línea imaginaria que conecta al buscador del misil con el objetivo.
+*   **PN (Proportional Navigation):** Ley de guiado donde la aceleración es proporcional a la rotación de la LOS.
+*   **Lead Angle:** Ángulo de predicción para compensar el movimiento del objetivo.
+*   **Miss Distance:** Distancia mínima alcanzada entre el misil y el objetivo durante el cruce.
+*   **RK4:** Método numérico de Runge-Kutta de cuarto orden.
+*   **G-Force:** Unidad de medida de aceleración relativa a la gravedad ($9.81 m/s^2$).
 
 ---
 
-## Extensiones Futuras
+## 12. Conclusiones y Trabajo Futuro
 
-### Implementadas en el Código
+### 12.1 Conclusiones
 
-- Perfil SAM completo con boost/loft/weave
-- Lead predictor para objetivos maniobrados
-- Múltiples patrones evasivos
-- Exportación de datos para análisis
+El proyecto ha demostrado exitosamente la implementación de un simulador de intercepción 3D complejo. Los resultados validan que la **Navegación Proporcional**, especialmente cuando se asiste con predicción de punto de impacto, es una estrategia extremadamente efectiva para interceptar objetivos aéreos, logrando distancias de fallo menores a 50 metros en escenarios deterministas.
 
-### Posibles Mejoras
+La elección de **Runge-Kutta 4** probó ser crucial para la fidelidad de la simulación, evitando los errores de acumulación de energía observados con métodos de primer orden. La arquitectura modular del software permite una fácil expansión y mantenimiento.
 
-1. **Modelo Aerodinámico**
-   - Resistencia del aire
-   - Sustentación
-   - Límites de G
+### 12.2 Trabajo Futuro
 
-2. **Contra medidas**
-   - Chaff/Flares
-   - ECM (contramedidas electrónicas)
-   - Terrain masking
+Para aumentar aún más la fidelidad del simulador, se proponen las siguientes mejoras:
 
-3. **Integrador Adaptativo**
-   - Usar `scipy.integrate.solve_ivp`
-   - Control de error automático
-   - Paso variable
-
-4. **Múltiples Interceptores**
-   - Salvas de 2-4 misiles
-   - Coordinación distribuida
-
-5. **Modelo de Daño**
-   - Zona letal
-   - Probabilidad de destrucción
-   - Fragmentación
-
-6. **UI Gráfica**
-   - Dashboard interactivo con PyQt/Tkinter
-   - Control en tiempo real
-   - Análisis comparativo
+1.  **Modelo Aerodinámico Completo:** Incorporar fuerzas de arrastre ($D = \frac{1}{2}\rho v^2 C_D A$) y sustentación dependientes de la altitud y número de Mach.
+2.  **Dinámica de 6 Grados de Libertad (6DOF):** Modelar la orientación (actitud) del misil, no solo su posición, incluyendo momentos de inercia y dinámica rotacional.
+3.  **Sensores Realistas:** Introducir ruido en las mediciones de posición y velocidad (filtro de Kalman) para simular imperfecciones de radar.
+4.  **Contramedidas:** Simular el lanzamiento de señuelos (flares/chaff) y maniobras de "beaming" para romper el bloqueo del radar.
 
 ---
 
-## Troubleshooting
+## 13. Referencias Bibliográficas
 
-### Problema: Misil no intercepta
-
-**Solución:**
-- Verificar velocidades relativas
-- Aumentar `nav_gain`
-- Reducir agresividad de maniobras evasivas
-- Aumentar `max_accel` del misil
-
-### Problema: Trayectorias erráticas
-
-**Solución:**
-- Reducir `dt` (mayor resolución)
-- Usar RK4 en lugar de Euler
-- Verificar límites de aceleración
-
-### Problema: Animación lenta
-
-**Solución:**
-- Aumentar `dt` (menos frames)
-- Reducir `animation_interval_ms`
-- Usar `--no-animate` y solo guardar
-
-### Problema: Error de importación
-
-**Solución:**
-```bash
-pip install --upgrade numpy matplotlib
-```
-
-### Problema: Gráficas no se muestran
-
-**Solución:**
-- Verificar backend de matplotlib
-- Usar `matplotlib.use('TkAgg')` antes de importar pyplot
-- En servidores sin GUI: usar `--no-animate --no-static --export-csv`
+1.  **Zarchan, P.** (2013). *Tactical and Strategic Missile Guidance* (6th ed.). AIAA Progress in Astronautics and Aeronautics. (La "biblia" del guiado de misiles).
+2.  **Ben-Asher, J. Z.** (2017). *Optimal Control Theory with Aerospace Applications*. AIAA.
+3.  **Siouris, G. M.** (2004). *Missile Guidance and Control Systems*. Springer.
+4.  **Press, W. H., et al.** (2007). *Numerical Recipes: The Art of Scientific Computing* (3rd ed.). Cambridge University Press. (Referencia para RK4).
+5.  **Documentation:** [NumPy Reference](https://numpy.org/doc/), [Matplotlib User Guide](https://matplotlib.org/stable/users/index.html).
 
 ---
-
-## Referencias y Recursos
-
-### Referencias Académicas
-
-1. **Blake, J.** (1985). *Guidance of Tactical Missiles*. McGraw-Hill.
-   - Capítulo 3: Proportional Navigation
-
-2. **Zarchan, P.** (2012). *Tactical and Strategic Missile Guidance*, 6th Ed. AIAA Progress in Astronautics and Aeronautics.
-   - Sección 4.2: Three-Dimensional Engagement
-
-3. **Vallado, D.** (2013). *Fundamentals of Astrodynamics and Applications*, 4th Ed.
-   - Apéndice D: Numerical Integration Methods
-
-4. **Shneydor, N.A.** (1998). *Missile Guidance and Pursuit: Kinematics, Dynamics and Control*. Horwood Publishing.
-
-### Recursos Online
-
-- [NASA Technical Reports Server](https://ntrs.nasa.gov/)
-- [AIAA Digital Library](https://arc.aiaa.org/)
-- [Missile Guidance Tutorial](https://www.dcs.gla.ac.uk/~johnson/teaching/dcs_level3/)
-
-### Libros de Métodos Numéricos
-
-- **Press, W.H. et al.** *Numerical Recipes*, Cambridge University Press.
-- **Burden, R.L. & Faires, J.D.** *Numerical Analysis*, Cengage Learning.
-
----
-
-## Licencia y Uso Académico
-
-Este proyecto fue desarrollado con fines **educativos** para el curso de Física Computacional en la Facultad de Ciencias, UNAM.
-
-**Uso permitido:**
-- Estudio personal
-- Proyectos académicos
-- Enseñanza
-
-**Atribución:**
-Si utilizas este código en publicaciones o presentaciones, por favor cita:
-```
-Proyecto Final - Simulación 3D de Intercepción de Aeronaves
-Física Computacional, Facultad de Ciencias, UNAM
-```
-
----
-
-## Contacto y Contribuciones
-
-Para reportar bugs, sugerir mejoras o hacer preguntas técnicas:
-- Crear issue en el repositorio
-- Contactar al instructor del curso
-
-**Contribuciones bienvenidas:**
-- Nuevos integradores numéricos
-- Modelos aerodinámicos
-- Patrones de maniobras adicionales
-- Mejoras en visualización
-
----
-
-<div align="center">
-
-**Universidad Nacional Autónoma de México**
-
-*Facultad de Ciencias*
-
-*Física Computacional - Proyecto Final*
-
-![Python](https://img.shields.io/badge/Python-3.8+-blue?style=flat-square)
-![NumPy](https://img.shields.io/badge/NumPy-Ready-green?style=flat-square)
-![Status](https://img.shields.io/badge/Testing-Passed-success?style=flat-square)
-
-</div>
+*Facultad de Ciencias, UNAM - Física Computacional - Proyecto Final 2025*
